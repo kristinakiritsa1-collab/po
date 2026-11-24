@@ -1,50 +1,752 @@
-'use strict';
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)], range=(a,b)=>Array.from({length:b-a+1},(_,i)=>i+a), art=range(48,57), img=(n,alt='Оригинальная работа')=>`<img src="${assets[n]}" alt="${alt}" loading="lazy">`, tile=(n,label='')=>`<button data-art="${n}" aria-label="Открыть работу ${n}">${img(n,label||'Оригинальная работа')}${label?`<small>${label}</small>`:''}</button>`, grid=(ids,labels=[])=>`<div class="artgrid">${ids.map((n,i)=>tile(n,labels[i])).join('')}</div>`;
-const names=['Главная','Обо мне','Цифровое искусство','Традиционное искусство','Дизайн персонажей','Графический дизайн','Логотипы и фирменный стиль','Дизайн упаковки','Социальные и образовательные проекты','Журналы','Книги и иллюстрации','Фотокаталоги','UI/UX и мобильные приложения','Веб-дизайн','Завершение'];
-const ids=['home','about','digital','traditional','characters','graphic','branding','packaging','social','magazines','books','catalogs','romina','web','closing'];
-const books={ 'guguscuk-24':{title:'Guguşçuk №24',count:24,desc:'Осень 2026 · дизайн и иллюстрации',button:'Открыть журнал'},tepegoz:{title:'Tepägöz',count:21,desc:'Гагаузская мифологическая сказка',button:'Читать сказку'},gagauzluk:{title:'Gagauzluk',count:39,desc:'Фотокаталог · 2026 · дизайн',button:'Открыть фотокаталог'}};
-const page=(key,n,thumb=false)=>`assets/editions/${key}/${thumb?'t':''}${String(n).padStart(2,'0')}.jpg`;
-const bookCard=key=>`<article class="book-card"><button class="book-cover" data-book="${key}" aria-label="${books[key].button}"><img src="${page(key,1)}" alt="${books[key].title}" loading="lazy"></button><h3>${books[key].title}</h3><p>${books[key].desc} · ${books[key].count} стр.</p><button class="primary" data-book="${key}">${books[key].button} ↗</button></article>`;
-const sec=(id,title,desc,body,colors)=>{let i=ids.indexOf(id);return `<section id="${id}" style="--a:${colors[0]};--b:${colors[1]};--c:${colors[2]}"><div class="sectionhead reveal"><div><p class="eyebrow">${String(i+1).padStart(2,'0')} / 15 · ${names[i]}</p><h2>${title}</h2></div>${desc?`<p>${desc}</p>`:''}</div><div class="reveal">${body}</div></section>`};
-const feature=(n,title,desc,extra='')=>`<div class="feature"><button class="image" data-art="${n}">${img(n,title)}</button><div><h3>${title}</h3><p>${desc}</p>${extra}</div></div>`;
-$('#heroArt').insertAdjacentHTML('beforeend',[49,48,51].map(n=>img(n)).join(''));
-const screens=['Вход','Произношение','Уроки','AI-помощник','Чтение','Профиль','Письмо','Ежедневное задание','Языки'];
-const colors={pink:['#fff0f8','#c9b1ff','#83d9ff'],paper:['#fff1d9','#e5c5a2','#ffd7c6'],red:['#fff1d8','#eab1a7','#e16a78'],blue:['#f0f7ff','#afd8e6','#f6ddad']};
-$('#main').insertAdjacentHTML('beforeend',[
-sec('about','От первого штриха<br><em>до целого мира.</em>','',`<div class="feature"><div><p class="about-copy">Я — Кристина Кирица, многопрофильный дизайнер и художник. В своём творчестве я объединяю искусство, современные технологии, культуру и визуальные истории.</p><p>Мне интересно создавать уникальные образы, разрабатывать фирменные стили, иллюстрировать книги и журналы, проектировать цифровые интерфейсы и превращать идеи в полноценные визуальные миры.</p><div class="tags">${['Иллюстрация','Брендинг','Типографика','UI/UX','Культура','Веб-дизайн'].map(x=>`<span>${x}</span>`).join('')}</div></div>${grid([48,34,18,26])}</div>`,colors.pink),
-sec('digital','Мир моих<br><em>иллюстраций.</em>','Портреты, стилизованные персонажи, фан-арт и художественные эксперименты. Перетаскивайте карусель или нажмите на рисунок.',`<div class="carousel" id="carousel">${art.map(n=>tile(n)).join('')}</div><div class="carouselControls"><button id="carPrev">←</button><span id="carCount"></span><button id="carNext">→</button></div><h3 style="margin:45px 0 20px">Галерея рисунков</h3>${grid(art,['Светлый портрет','Стилизованная иллюстрация','Тёмный портрет','Фиолетовая палитра','Портрет','Стилизованный портрет','Розовая палитра','Розовый портрет','Фан-арт / персонаж','Фан-арт / персонаж'])}`,['#ffdff2','#a99cf2','#a5ecff']),
-sec('traditional','С чего начинается<br><em>искусство.</em>','',feature(58,'Карандашный рисунок','Традиционная работа. Художественный референс Harrison Fisher сохранён на оригинальном рисунке.'),colors.paper),
-sec('characters','Персонажи<br><em>с историей.</em>','',feature(18,'Romina','Образ героини в национальном костюме: орнаменты, выразительные волосы, красно-кремовая палитра.',grid([2,15])),colors.red),
-sec('graphic','Графика как<br><em>язык.</em>','Разные характеры, разные визуальные системы.',`<div class="logo-strip">${[[20,'ZinFoto','#zinfoto'],[38,'BK Wearshop','#bk'],[32,'Glow Mermaid','#glow'],[39,'Ученический совет','#social'],[17,'Romina','#romina']].map(([n,t,h])=>`<a href="${h}">${img(n)}<p>${t}</p></a>`).join('')}</div><div style="margin-top:45px">${grid([19,33,38,46])}</div>`,colors.pink),
-sec('branding','Характер<br><em>бренда.</em>','Айдентика, типографика, печатные материалы.',`<article id="zinfoto" class="brandworld mono"><h3>ZinFoto</h3><p>Монохромная айдентика фотографа</p>${grid(range(19,31))}</article><article id="bk" class="brandworld cocoa">${feature(38,'BK Wearshop','Фирменный стиль магазина одежды. Логотип, палитра и композиции.')}</article><article id="glow" class="brandworld pearl"><h3>Glow Mermaid</h3><p>Волшебная айдентика детской косметики</p>${grid([32,33,34,35,36,37])}</article>`,colors.pink),
-sec('packaging','Красота<br><em>в деталях.</em>','Glow Mermaid · упаковка, рекламные материалы и косметические продукты.',grid([37,36,35,33]),['#ffe2f7','#bba2ed','#83d9ff']),
-sec('social','Дизайн для<br><em>сообщества.</em>','',`<article class="brandworld youth"><h3>Региональный ученический совет Гагаузии</h3>${grid([39,40,41])}</article><article class="brandworld herald">${feature(42,'Лицей V. Moșkov','Геральдическая композиция: щит, павлины, корона и академические символы.')}</article>`,colors.blue),
-sec('magazines','Истории, которые<br><em>можно перелистнуть.</em>','Виртуальная библиотека · журналы, книги и фотокаталоги.',`<div class="library"><article class="book-card"><button class="book-cover" data-art="43">${img(43)}</button><h3>Guguşçuk №22</h3><p>Весенний выпуск · обложка</p><button data-art="43">Смотреть обложку</button></article>${bookCard('guguscuk-24')}<div class="book-card"><h3>Осень 2026</h3><p>Дизайн и иллюстрации — Кристина Кирица (стр. 2).</p><button class="image" data-book="guguscuk-24"><img src="${page('guguscuk-24',5)}" style="width:100%;max-height:340px;object-fit:contain" alt="Страница журнала"></button></div></div>`,['#fff1ce','#f2ad6b','#c9de9d']),
-sec('books','Мир<br><em>сказок.</em>','Tepägöz · полноценное иллюстрированное издание.',`<div class="feature">${bookCard('tepegoz')}<div><h3>Гагаузская мифологическая сказка</h3><p>21 страница в исходном порядке. Иллюстрации, текст и оформление сохраняются.</p><div class="sample-spread" data-book="tepegoz"><img src="${page('tepegoz',2)}" alt="Страница 2"><img src="${page('tepegoz',3)}" alt="Страница 3"></div></div></div>`,['#ffd6b0','#c1a0e5','#ffaf99']),
-sec('catalogs','Культура<br><em>глазами детей.</em>','Uşakların gözünnän «GAGAUZLUK» prin ochii copiilor.',`<div class="feature">${bookCard('gagauzluk')}<div><h3>Фотокаталог 2026</h3><p>Дизайн — Кристина Кирица (стр. 4). Все фотографии, тексты и сведения об авторах сохранены.</p>${grid([46,47])}</div></div>`,colors.blue),
-sec('romina','Romina.<br><em>Язык для жизни.</em>','MVP мобильного приложения для изучения румынского языка в Молдове.',`<div class="feature"><div><h3>Интерфейс и обучение</h3><p>Демонстрация оригинальных экранов приложения. Не является работающим онлайн-сервисом.</p><div class="phone-controls">${screens.map((s,i)=>`<button data-screen="${i+3}" ${i===0?'class="active"':''}>${s}</button>`).join('')}</div></div><div class="phones"><button class="image" id="phoneOpen" data-art="3"><img id="phone" src="${assets[3]}" alt="Экран приложения"></button><img src="${assets[18]}" alt="Персонаж Romina"></div></div><h3 style="margin:40px 0 20px">Визуальная айдентика и мокапы</h3>${grid([17,2,12,13,14,15,16,18])}${grid(range(3,11),screens)}`,colors.red),
-sec('web','Интерактивный<br><em>дизайн.</em>','',`<div class="feature"><div><h3>Моя творческая вселенная</h3><p>Это портфолио — демонстрация интерактивного веб-дизайна: галереи, цифровая библиотека, навигация и презентация.</p><button data-present class="primary">Запустить презентацию</button></div><div class="web-orb"><span>HTML<br>CSS<br>JS</span><i>✦</i></div></div>`,colors.pink),
-`<section id="closing" class="closing"><span class="star">✦</span><div><p class="eyebrow">15 / 15 · КРИСТИНА КИРИЦА · 2026</p><h2>СПАСИБО<br><em>ЗА ВНИМАНИЕ!</em></h2><p>Искусство начинается с идеи, а дизайн превращает её в реальность.</p><a class="primary" href="#home">В начало ↑</a></div></section>`].join(''));
-const navGroups=[['Главная',[0]],['Обо мне',[1]],['Искусство',[2,3,4]],['Графический дизайн',[5,6,7,8]],['Издательский дизайн',[9,10,11]],['Цифровые проекты',[12,13,14]]];
-$('#nav').innerHTML=navGroups.map(([title,ns])=>ns.length===1?`<a href="#${ids[ns[0]]}">${title}</a>`:`<details><summary>${title} ▾</summary><div>${ns.map(n=>`<a href="#${ids[n]}">${names[n]}</a>`).join('')}</div></details>`).join('');
-let introTimer=setTimeout(()=>$('#intro').hidden=true,2800);$('#skip').onclick=()=>{clearTimeout(introTimer);$('#intro').hidden=true};
-let quiet=matchMedia('(prefers-reduced-motion: reduce)').matches;function motion(){document.body.classList.toggle('quiet',quiet);$('#motion').textContent=`Эффекты: ${quiet?'выкл.':'вкл.'}`;$('#motion').setAttribute('aria-pressed',String(quiet))}motion();$('#motion').onclick=()=>{quiet=!quiet;motion()};
-const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.05});$$('.reveal').forEach(e=>observer.observe(e));
-const sectionObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){$$('nav a').forEach(a=>a.classList.toggle('active',a.hash==='#'+e.target.id));}}),{rootMargin:'-20% 0px -50% 0px'});$$('main section').forEach(e=>sectionObs.observe(e));
-addEventListener('scroll',()=>{$('#progress').style.width=`${scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)*100}%`},{passive:true});$('#top').onclick=()=>scrollTo({top:0,behavior:quiet?'instant':'smooth'});
-let car=0,carHover=false,dragX=null,dragged=false;function carousel(){let n=art.length;$$('#carousel button').forEach((b,i)=>{let d=(i-car+n)%n;if(d>n/2)d-=n;b.style.transform=`translate(-50%,-50%) translateX(${d*155}px) translateZ(${-Math.abs(d)*125}px) rotateY(${-d*21}deg) scale(${d===0?1.12:1})`;b.style.zIndex=20-Math.abs(d);b.style.opacity=Math.abs(d)>3?0:1-Math.abs(d)*.16;b.style.pointerEvents=Math.abs(d)>3?'none':'auto';b.tabIndex=Math.abs(d)>3?-1:0});$('#carCount').textContent=`${car+1} / ${n}`}
-function carMove(n){car=(car+n+art.length)%art.length;carousel()}carousel();$('#carPrev').onclick=()=>carMove(-1);$('#carNext').onclick=()=>carMove(1);$('#carousel').onpointerenter=()=>carHover=true;$('#carousel').onpointerleave=()=>{carHover=false;dragX=null};$('#carousel').onpointerdown=e=>{dragX=e.clientX;dragged=false};$('#carousel').onpointerup=e=>{if(dragX!==null&&Math.abs(e.clientX-dragX)>35){carMove(e.clientX<dragX?1:-1);dragged=true;setTimeout(()=>dragged=false,300)}dragX=null};setInterval(()=>{let r=$('#carousel').getBoundingClientRect();if(!quiet&&!carHover&&!$('dialog[open]')&&r.bottom>0&&r.top<innerHeight&&!document.hidden)carMove(1)},4500);
-let viewList=[],viewIndex=0;function openArt(n){viewList=art.includes(n)?art:Object.keys(assets).map(Number).filter(x=>assets[x].split('/')[1]===assets[n].split('/')[1]);viewIndex=viewList.indexOf(n);showArt();openDialog('viewer')}
-function showArt(){let n=viewList[viewIndex];$('#viewImage').src=assets[n];$('#viewImage').classList.remove('zoom');$('#viewTitle').textContent=`Оригинальная работа · ${viewIndex+1} / ${viewList.length}`;$('#viewZoom').textContent='Увеличить'}function viewMove(d){viewIndex=(viewIndex+d+viewList.length)%viewList.length;showArt()}$('#viewPrev').onclick=()=>viewMove(-1);$('#viewNext').onclick=()=>viewMove(1);$('#viewZoom').onclick=()=>{$('#viewImage').classList.toggle('zoom');$('#viewZoom').textContent=$('#viewImage').classList.contains('zoom')?'Уменьшить':'Увеличить'};
-function openDialog(id){let el=$('#'+id);if(!el.open)el.showModal();document.body.classList.add('modal-open');document.body.style.overflow='hidden'}function closeDialog(id){let el=$('#'+id);if(el.open)el.close();if(!$('dialog[open]')){document.body.classList.remove('modal-open');document.body.style.overflow=''}}
-let bookKey='',bookPos=1,bookMemory={},bookZoom=false,turning=false;function single(){return innerWidth<=900}function bookPages(){let count=books[bookKey].count;return bookPos===1||single()?[bookPos]:[bookPos,...(bookPos<count?[bookPos+1]:[])]}
-function showBook(){let b=books[bookKey];bookMemory[bookKey]=bookPos;$('#spread').innerHTML=bookPages().map(n=>`<img class="page${bookZoom?' zoom':''}" src="${page(bookKey,n)}" alt="Страница ${n}" draggable="false">`).join('');$('#pageNumber').value=bookPos;$('#pageNumber').max=b.count;$('#pageTotal').textContent=`/ ${b.count}`;$('#bookPrev').disabled=bookPos===1;$('#bookNext').disabled=bookPages().at(-1)>=b.count;$('#thumbs').querySelectorAll('button').forEach(x=>x.setAttribute('aria-current',String(+x.dataset.page===bookPos)))}
-function openBook(key){bookKey=key;bookPos=bookMemory[key]||1;bookZoom=false;turning=false;$('#bookTitle').textContent=books[key].title;$('#pdfDownload').href=`assets/pdf/${key}.pdf`;$('#bookZoom').textContent='Увеличить';$('#thumbs').hidden=true;$('#thumbs').innerHTML=range(1,books[key].count).map(n=>`<button data-page="${n}"><img src="${page(key,n,true)}" alt="Страница ${n}" loading="lazy">${n}</button>`).join('');showBook();openDialog('reader')}
-function goPage(n){if(turning||!bookKey)return;n=Math.min(books[bookKey].count,Math.max(1,Number(n)||1));if(!single()&&n>1&&n%2)n--;bookPos=n;showBook()}
-function turn(d){if(turning||!bookKey)return;let n=single()?bookPos+d:d>0?(bookPos===1?2:bookPos+2):(bookPos<=2?1:bookPos-2);if(n<1||n>books[bookKey].count)return;if(quiet){goPage(n);return}turning=true;let p=d>0?$('#spread').lastElementChild:$('#spread').firstElementChild;p.animate([{transform:'rotateY(0)',filter:'brightness(1)'},{transform:`rotateY(${d>0?-92:92}deg)`,filter:'brightness(.65)'}],{duration:240,fill:'forwards'}).finished.then(()=>{turning=false;goPage(n);let q=d>0?$('#spread').firstElementChild:$('#spread').lastElementChild;q.animate([{transform:`rotateY(${d>0?92:-92}deg)`,filter:'brightness(.7)'},{transform:'rotateY(0)',filter:'brightness(1)'}],{duration:240});}).catch(()=>{turning=false})}
-$('#bookPrev').onclick=()=>turn(-1);$('#bookNext').onclick=()=>turn(1);$('#pageNumber').onchange=e=>goPage(e.target.value);$('#thumbToggle').onclick=()=>$('#thumbs').hidden=!$('#thumbs').hidden;$('#bookZoom').onclick=()=>{bookZoom=!bookZoom;showBook();$('#bookZoom').textContent=bookZoom?'Уменьшить':'Увеличить'};$('#bookFull').onclick=()=>{if(document.fullscreenElement===document.documentElement&&$('#presentation').open)return; if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});else document.documentElement.requestFullscreen?.().catch(()=>{})};let bookX=null;$('#spread').onpointerdown=e=>{bookX=e.clientX;$('#spread').setPointerCapture(e.pointerId)};$('#spread').onpointerup=e=>{if(bookX===null)return;let dx=e.clientX-bookX;if(Math.abs(dx)>35)turn(dx<0?1:-1);else {let r=$('#spread').getBoundingClientRect();if(e.clientX>r.right-70)turn(1);else if(e.clientX<r.left+70)turn(-1)}bookX=null};$('#spread').onpointercancel=()=>bookX=null;addEventListener('resize',()=>{if($('#reader').open){if(!single()&&bookPos>1&&bookPos%2)bookPos--;showBook()}});
-const scenes=[['Моя творческая вселенная','Кристина Кирица · Художник, дизайнер, иллюстратор. Разные миры. Один творческий взгляд.',[48,49,51,34],colors.pink],['Мир моих иллюстраций','Цифровые портреты, персонажи и традиционное искусство.',[48,51,55,58],colors.pink],['Персонажи с историей','Romina — образ в национальном костюме.',[18,2],colors.red],['Характер бренда','ZinFoto, Glow Mermaid и BK Wearshop — разные визуальные языки.',[19,33,38],colors.pink],['Дизайн для сообщества','Региональный ученический совет и герб лицея V. Moșkov.',[39,40,41,42],colors.blue],['Истории, которые можно перелистнуть','Журнал, книга и фотокаталог. Откройте любое издание.',[],colors.paper],['Romina и цифровой дизайн','Мобильный MVP для изучения румынского языка и интерактивное портфолио.',[14,5,8,17],colors.red],['Спасибо за внимание!','Искусство начинается с идеи, а дизайн превращает её в реальность.',[48,34,18,43],colors.pink]];
-let sceneIndex=0;function showScene(){let [t,d,ns,c]=scenes[sceneIndex];$('#sceneCount').textContent=`СЦЕНА ${sceneIndex+1} / 8`;$('#scene').style.cssText=`--a:${c[0]};--b:${c[1]};--c:${c[2]}`;$('#scene').innerHTML=`<div><p class="eyebrow">КРИСТИНА КИРИЦА / 2026</p><h2>${t}</h2><p>${d}</p></div><div class="scene-images">${sceneIndex===5?Object.keys(books).map(k=>`<button data-book="${k}"><img src="${page(k,1)}" alt="${books[k].title}"><small>${books[k].title} · ${books[k].count} стр.</small></button>`).join(''):ns.map(n=>tile(n)).join('')}</div>`;$('#prevScene').disabled=sceneIndex===0;$('#nextScene').textContent=sceneIndex===7?'Завершить':'Далее →';if(!quiet)$('#scene').animate([{opacity:.3,transform:'translateY(12px)'},{opacity:1,transform:'translateY(0)'}],{duration:400})}
-function startPresentation(){sceneIndex=0;showScene();openDialog('presentation');document.documentElement.requestFullscreen?.().catch(()=>{})}function endPresentation(){closeDialog('presentation');if(document.fullscreenElement)document.exitFullscreen().catch(()=>{})}function nextScene(){if(sceneIndex===7)endPresentation();else{sceneIndex++;showScene()}}$('#prevScene').onclick=()=>{if(sceneIndex>0){sceneIndex--;showScene()}};$('#nextScene').onclick=nextScene;$('#exitPresentation').onclick=endPresentation;
-document.addEventListener('click',e=>{let b=e.target.closest('[data-art],[data-book],[data-screen],[data-page],[data-present],[data-close],nav a');if(!b)return;if(b.matches('[data-art]')){if(!dragged)openArt(+b.dataset.art)}else if(b.dataset.book)openBook(b.dataset.book);else if(b.dataset.screen){$('#phone').src=assets[b.dataset.screen];$('#phoneOpen').dataset.art=b.dataset.screen;$$('[data-screen]').forEach(x=>x.classList.toggle('active',x===b))}else if(b.dataset.page)goPage(b.dataset.page);else if(b.hasAttribute('data-present'))startPresentation();else if(b.dataset.close)closeDialog(b.dataset.close);else if(b.matches('nav a'))$$('nav details').forEach(x=>x.open=false)});
-function activeDialog(){return $('#reader').open?'reader':$('#viewer').open?'viewer':$('#presentation').open?'presentation':null}document.addEventListener('keydown',e=>{let a=activeDialog();if(!a||e.target.tagName==='INPUT')return;if(e.key==='Escape'){e.preventDefault();a==='presentation'?endPresentation():closeDialog(a);return}let d=['ArrowRight','ArrowDown',' '].includes(e.key)?1:['ArrowLeft','ArrowUp'].includes(e.key)?-1:0;if(!d)return;e.preventDefault();if(a==='reader')turn(d);else if(a==='viewer')viewMove(d);else if(d>0)nextScene();else if(sceneIndex>0){sceneIndex--;showScene()}});$$('dialog').forEach(x=>x.addEventListener('cancel',e=>{e.preventDefault();x.id==='presentation'?endPresentation():closeDialog(x.id)}));
+/* =========================================================
+   Кристина Кирица — «Моя творческая вселенная» · script.js
+   Без внешних зависимостей. Работает офлайн (file://).
+   ========================================================= */
+(function () {
+  'use strict';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var body = document.body;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isTouch = window.matchMedia && window.matchMedia('(hover: none)').matches;
+  var seed = 7; function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function store(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); sessionStorage.setItem(k, v); } catch (e) { return null; } }
+
+  /* ---------------- Данные ---------------- */
+  var DA = 'assets/digital-art/';
+  var ART = [
+    { f: '01-blonde-portrait', w: 596, h: 760, t: 'Светловолосый портрет', c: ['portrait', 'semi'], cat: 'Цифровой портрет · полуреализм', pal: ['#9fd4ff', '#dfe6f2', '#f3d27a'] },
+    { f: '02-summer-popsicle', w: 582, h: 760, t: 'Летнее настроение', c: ['semi', 'experiment'], cat: 'Полуреалистичная иллюстрация', pal: ['#ffb69e', '#83d9ff', '#ffe9a8'] },
+    { f: '03-boy-with-plush', w: 569, h: 760, t: 'Портрет с игрушкой', c: ['vintage', 'portrait'], cat: 'Винтажная эстетика', pal: ['#c58b4f', '#7a4e2d', '#2b1a12'] },
+    { f: '04-purple-streak-girl', w: 569, h: 760, t: 'Фиолетовая прядь', c: ['stylized', 'experiment'], cat: 'Стилизованный персонаж · эксперимент', pal: ['#8755f5', '#d14bd8', '#2a1a4a'] },
+    { f: '05-auburn-bow', w: 569, h: 760, t: 'Каштановые волосы и бант', c: ['portrait', 'fanart'], cat: 'Фан-арт · цифровой портрет', pal: ['#ffb69e', '#f458ae', '#fff0f8'] },
+    { f: '06-violet-hair', w: 569, h: 760, t: 'Фиолетовые волосы', c: ['portrait', 'fanart'], cat: 'Фан-арт · цифровой портрет', pal: ['#b48cff', '#6b3fa0', '#241439'] },
+    { f: '07-pink-bob', w: 569, h: 760, t: 'Розовое каре', c: ['portrait', 'fanart', 'stylized'], cat: 'Фан-арт · цифровой портрет', pal: ['#f458ae', '#ffb69e', '#ffe0ec'] },
+    { f: '08-pink-hairclips', w: 569, h: 760, t: 'Розовые заколки', c: ['portrait', 'fanart'], cat: 'Фан-арт · цифровой портрет', pal: ['#ff7eb6', '#ffc2a8', '#c2185b'] },
+    { f: '09-dark-hair-headband', w: 570, h: 760, t: 'Ветер в волосах', c: ['semi', 'stylized'], cat: 'Стилизованный персонаж', pal: ['#6b7a99', '#1f2a4d', '#e6e9f2'] },
+    { f: '10-spiky-blond', w: 569, h: 760, t: 'Тёмный портрет', c: ['fanart', 'semi'], cat: 'Фан-арт · тёмная работа', pal: ['#3a4256', '#0e1630', '#d8c47a'] }
+  ];
+  ART.forEach(function (a) { a.full = DA + a.f + '.jpg'; a.thumb = DA + 'thumbs/' + a.f + '.jpg'; });
+
+  var BOOKS = {
+    guguscuk24: { title: 'Guguşçuk №24 · 2026', n: 24, dir: 'assets/magazines/guguscuk-24/pages/', pdf: 'assets/pdf/guguscuk-24-2026.pdf', aspect: 1067 / 1500, bg: ['#d9531e', '#3a0d06'] },
+    tepegoz: { title: 'Tepägöz · Gagauz mifli masalı', n: 21, dir: 'assets/books/tepegoz/pages/', pdf: 'assets/pdf/tepegoz.pdf', aspect: 925 / 1300, bg: ['#a0508e', '#24103a'] },
+    gagauzluk: { title: 'Uşakların gözünnän «GAGAUZLUK» · 2026', n: 39, dir: 'assets/catalogs/gagauzluk/pages/', pdf: 'assets/pdf/gagauzluk-fotokatalog-2026.pdf', aspect: 1, bg: ['#5e86a8', '#1b2436'] }
+  };
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function pagePath(b, i, thumb) { return BOOKS[b].dir + (thumb ? 'thumbs/' : '') + pad(i + 1) + '.jpg'; }
+
+  var ROM = 'assets/romina/';
+  var SCREENS = [
+    ['screen-splash', 'Заставка'], ['screen-login', 'Вход'], ['screen-lessons', 'Уроки'], ['screen-pronunciation', 'Произношение'],
+    ['screen-writing', 'Письмо'], ['screen-reading', 'Чтение'], ['screen-ai', 'AI-помощник'], ['screen-profile-progress', 'Профиль и прогресс'],
+    ['screen-daily', 'Ежедневные задания'], ['screen-settings-language', 'Языковые настройки']
+  ];
+  var ZIN = ['01-composition', '02-logo-light', '03-logo-variant', '04-poster-captured-moment', '05-logo-dark', '06-business-card', '07-business-cards-mockup', '08-poster-portrait', '09-booklet', '10-booklet-open', '11-poster-logo', '12-poster-best-photo', '13-tag'];
+  var ZIN_T = ['Фирменная композиция', 'Логотип · светлая версия', 'Вариант знака', 'Постер Captured moment', 'Логотип · тёмная версия', 'Визитка', 'Мокап визиток', 'Портретный постер', 'Фотобуклет', 'Разворот фотобуклета', 'Постер со знаком', 'Постер The best photo of your life', 'Бирка'];
+  var CHAR_SRC = 'assets/character-design/romina-national-costume.jpg';
+  var BOOK_AR = { guguscuk24: '1067/1500', tepegoz: '925/1300', gagauzluk: '1/1' };
+
+  /* ---------------- Утилиты ---------------- */
+  function splitText(el) {
+    var cs = getComputedStyle(el);
+    if ((cs.webkitBackgroundClip || cs.backgroundClip) === 'text') { el.classList.add('reveal-up'); return; }
+    var txt = el.textContent.replace(/\s+/g, ' ').trim(); el.setAttribute('aria-label', txt); el.textContent = '';
+    var i = 0;
+    txt.split(' ').forEach(function (word, wi) {
+      if (wi) el.appendChild(document.createTextNode(' '));
+      var w = document.createElement('span'); w.className = 'w'; w.setAttribute('aria-hidden', 'true');
+      word.split('').forEach(function (ch) {
+        var s = document.createElement('span'); s.className = 'ch'; s.textContent = ch; s.style.setProperty('--i', i++); w.appendChild(s);
+      });
+      el.appendChild(w);
+    });
+    el.classList.add('split-ready');
+  }
+  $$('[data-split]').forEach(function (el) { if (!el.closest('#intro')) splitText(el); });
+  // буквы «ПОРТФОЛИО» в заставке
+  (function () {
+    var w = $('.intro-word'), t = w.textContent; w.textContent = '';
+    t.split('').forEach(function (c, i) { var s = document.createElement('span'); s.className = 'ch'; s.textContent = c; s.style.setProperty('--i', i); w.appendChild(s); });
+  })();
+
+  function svgUse(id, cls) {
+    var ns = 'http://www.w3.org/2000/svg', s = document.createElementNS(ns, 'svg'), u = document.createElementNS(ns, 'use');
+    u.setAttribute('href', '#' + id); s.appendChild(u); if (cls) s.setAttribute('class', cls); return s;
+  }
+  function edgePos() { // позиции по краям, чтобы декор не перекрывал работы
+    var side = rnd();
+    if (side < .35) return [rnd() * 9 + 1, rnd() * 90 + 4];
+    if (side < .7) return [rnd() * 9 + 89, rnd() * 90 + 4];
+    if (side < .85) return [rnd() * 90 + 5, rnd() * 8 + 2];
+    return [rnd() * 90 + 5, rnd() * 8 + 90];
+  }
+  $$('.deco').forEach(function (d) {
+    var n = +d.dataset.stars || 0, sp = +d.dataset.spheres || 0, rg = +d.dataset.rings || 0, i, p, el;
+    for (i = 0; i < n; i++) {
+      p = edgePos(); el = svgUse(rnd() < .65 ? 's-sparkle' : 's-star', 'd-star' + (rnd() < .3 ? ' gold' : ''));
+      el.style.cssText = 'left:' + p[0] + '%;top:' + p[1] + '%;--s:' + (14 + rnd() * 34) + 'px;--t:' + (2.5 + rnd() * 4) + 's;animation-delay:' + (-rnd() * 5) + 's';
+      d.appendChild(el);
+    }
+    for (i = 0; i < sp; i++) {
+      p = edgePos(); el = document.createElement('i'); el.className = 'd-sphere';
+      el.style.cssText = 'left:' + p[0] + '%;top:' + p[1] + '%;--s:' + (40 + rnd() * 90) + 'px;--t:' + (6 + rnd() * 6) + 's;margin:-40px';
+      d.appendChild(el);
+    }
+    for (i = 0; i < rg; i++) {
+      p = edgePos(); el = document.createElement('i'); el.className = 'd-ring';
+      el.style.cssText = 'left:' + p[0] + '%;top:' + p[1] + '%;--s:' + (90 + rnd() * 140) + 'px;--t:' + (10 + rnd() * 10) + 's;margin:-80px';
+      d.appendChild(el);
+    }
+  });
+
+  /* ---------------- Заставка ---------------- */
+  var intro = $('#intro'), introDone = false;
+  (function () {
+    var box = $('.intro-stars');
+    for (var i = 0; i < 16; i++) {
+      var s = svgUse('s-sparkle'); var p = [rnd() * 96 + 2, rnd() * 92 + 4];
+      s.style.cssText = 'left:' + p[0] + '%;top:' + p[1] + '%;--s:' + (12 + rnd() * 40) + 'px;--dl:' + (0.3 + rnd() * 1.4) + 's';
+      box.appendChild(s);
+    }
+  })();
+  function endIntro() {
+    if (introDone) return; introDone = true;
+    intro.classList.add('zoom');
+    setTimeout(function () {
+      intro.classList.add('done'); body.classList.remove('is-intro');
+      $('#home').classList.add('inview');
+      setTimeout(function () { intro.remove(); }, 1000);
+    }, reduce ? 50 : 650);
+  }
+  $('.intro-skip').addEventListener('click', endIntro);
+  setTimeout(endIntro, reduce ? 600 : 3300);
+
+  /* ---------------- Навигация / разделы ---------------- */
+  var sections = $$('main > .section');
+  var dotsBox = $('.dots');
+  sections.forEach(function (s) {
+    var a = document.createElement('a'); a.href = '#' + s.id; a.dataset.go = s.id;
+    a.innerHTML = '<span>' + s.dataset.num + ' · ' + s.dataset.title + '</span>';
+    a.setAttribute('aria-label', s.dataset.title); dotsBox.appendChild(a);
+  });
+  function goTo(id) {
+    var el = document.getElementById(id); if (!el) return;
+    closeMenus();
+    var y = el.getBoundingClientRect().top + window.scrollY - (el.classList.contains('section') ? 0 : 64);
+    window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-go]');
+    if (a) { e.preventDefault(); goTo(a.dataset.go); }
+  });
+  var menu = $('.menu');
+  function closeMenus() { $$('.has-sub.open').forEach(function (l) { l.classList.remove('open'); }); menu.classList.remove('open'); }
+  $$('.has-sub > button').forEach(function (b) {
+    b.addEventListener('click', function (e) {
+      e.stopPropagation(); var li = b.parentNode, was = li.classList.contains('open');
+      $$('.has-sub.open').forEach(function (l) { l.classList.remove('open'); });
+      if (!was) li.classList.add('open');
+    });
+  });
+  document.addEventListener('click', function (e) { if (!e.target.closest('.menu')) closeMenus(); });
+  $('.burger').addEventListener('click', function (e) { e.stopPropagation(); menu.classList.toggle('open'); });
+  var toTop = $('.to-top');
+  toTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
+
+  var groupOf = { home: null, about: null, digital: 'art', traditional: 'art', characters: 'art', graphic: 'graphic', identity: 'graphic', packaging: 'graphic', social: 'graphic', magazines: 'publish', books: 'publish', catalogs: 'publish', uiux: 'digitalp', web: 'digitalp', finale: 'digitalp' };
+  var subTargets = ['zinfoto', 'bk', 'glow', 'council', 'emblem', 'guguscuk'].map(function (id) { return document.getElementById(id); });
+  var current = null;
+  function setActive(sec) {
+    if (current === sec) return; current = sec;
+    var c = sec.dataset.colors.split(',');
+    ['--c1', '--c2', '--c3', '--c4'].forEach(function (k, i) { body.style.setProperty(k, c[i]); });
+    $('.sec-counter b').textContent = sec.dataset.num;
+    $$('.dots a').forEach(function (a) { a.classList.toggle('on', a.dataset.go === sec.id); });
+    $$('.menu-list > li').forEach(function (li) { li.classList.remove('active'); });
+    var g = groupOf[sec.id];
+    var li = g ? $('.has-sub[data-group="' + g + '"]') : ($('.menu-list a[data-go="' + sec.id + '"]') || {}).parentNode;
+    if (li && li.classList) li.classList.add('active');
+  }
+  var ticking = false;
+  function onScroll() {
+    ticking = false;
+    var vh = window.innerHeight, mid = vh * 0.45, best = sections[0];
+    for (var i = 0; i < sections.length; i++) { var r = sections[i].getBoundingClientRect(); if (r.top <= mid && r.bottom > mid) { best = sections[i]; break; } }
+    setActive(best);
+    var max = document.documentElement.scrollHeight - vh;
+    $('.progress span').style.width = (max > 0 ? window.scrollY / max * 100 : 0) + '%';
+    toTop.classList.toggle('show', window.scrollY > vh * 0.8);
+    // подсветка подпунктов
+    var sub = null;
+    subTargets.forEach(function (t) { if (!t) return; var r = t.getBoundingClientRect(); if (r.top <= mid && r.bottom > mid) sub = t.id; });
+    $$('.sub a').forEach(function (a) { a.classList.toggle('active', a.dataset.go === (sub || best.id)); });
+    romScroll();
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.target.id === 'home' && !introDone) return;
+      e.target.classList.toggle('inview', e.isIntersecting);
+    });
+  }, { rootMargin: '-8% 0px -8% 0px' });
+  sections.forEach(function (s) { io.observe(s); });
+  var devIO = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('dev'); devIO.unobserve(e.target); } }); }, { threshold: .35 });
+  $$('.develop').forEach(function (d) { devIO.observe(d); });
+
+  /* ---------------- Частицы ---------------- */
+  var cv = $('#particles'), cx = cv.getContext('2d'), parts = [], pw, ph;
+  function pResize() {
+    var d = Math.min(window.devicePixelRatio || 1, 1.5); pw = innerWidth; ph = innerHeight;
+    cv.width = pw * d; cv.height = ph * d; cx.setTransform(d, 0, 0, d, 0, 0);
+    var n = Math.round(Math.min(70, pw * ph / 22000)); parts = [];
+    for (var i = 0; i < n; i++) parts.push({ x: Math.random() * pw, y: Math.random() * ph, r: .6 + Math.random() * 2.2, v: .1 + Math.random() * .35, ph: Math.random() * 6.28, sp: Math.random() < .22 });
+  }
+  pResize(); window.addEventListener('resize', pResize);
+  var mouse = { x: innerWidth / 2, y: innerHeight / 2 };
+  function particlesOn() { return !document.hidden && !body.classList.contains('calm') && !body.classList.contains('modal-open') && !reduce; }
+  function pFrame(t) {
+    requestAnimationFrame(pFrame);
+    if (!particlesOn()) return;
+    cx.clearRect(0, 0, pw, ph);
+    for (var i = 0; i < parts.length; i++) {
+      var p = parts[i];
+      p.y -= p.v; p.x += Math.sin(t / 2000 + p.ph) * .2 + (mouse.x - pw / 2) * 0.00008 * p.r;
+      if (p.y < -10) { p.y = ph + 10; p.x = Math.random() * pw; }
+      var a = .35 + .65 * Math.abs(Math.sin(t / 900 + p.ph));
+      if (p.sp) {
+        var s = p.r * 3.2 * a; cx.fillStyle = 'rgba(255,255,255,' + a + ')';
+        cx.beginPath(); cx.moveTo(p.x, p.y - s); cx.quadraticCurveTo(p.x, p.y, p.x + s, p.y); cx.quadraticCurveTo(p.x, p.y, p.x, p.y + s); cx.quadraticCurveTo(p.x, p.y, p.x - s, p.y); cx.quadraticCurveTo(p.x, p.y, p.x, p.y - s); cx.fill();
+      } else {
+        cx.fillStyle = 'rgba(255,240,248,' + a * .8 + ')'; cx.beginPath(); cx.arc(p.x, p.y, p.r, 0, 6.283); cx.fill();
+      }
+    }
+  }
+  requestAnimationFrame(pFrame);
+
+  /* ---------------- Курсор, магнитные кнопки, наклон ---------------- */
+  var glow = $('.cursor-glow');
+  window.addEventListener('pointermove', function (e) {
+    mouse.x = e.clientX; mouse.y = e.clientY;
+    if (glow) glow.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px)';
+  }, { passive: true });
+  if (!isTouch) {
+    document.addEventListener('pointermove', function (e) {
+      var m = e.target.closest && e.target.closest('.magnetic');
+      $$('.magnetic.mag-on').forEach(function (b) { if (b !== m) { b.classList.remove('mag-on'); b.style.transform = ''; } });
+      if (!m || body.classList.contains('calm')) return;
+      var r = m.getBoundingClientRect(), dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+      m.classList.add('mag-on'); m.style.transform = 'translate(' + dx * .25 + 'px,' + dy * .3 + 'px)';
+    }, { passive: true });
+    document.addEventListener('pointermove', function (e) {
+      var t = e.target.closest && e.target.closest('.tilt');
+      $$('.tilt.tilting').forEach(function (b) { if (b !== t) { b.classList.remove('tilting'); b.style.transform = ''; } });
+      if (!t || body.classList.contains('calm')) return;
+      var r = t.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      t.classList.add('tilting');
+      t.style.transform = 'perspective(900px) rotateX(' + ((.5 - y) * 10) + 'deg) rotateY(' + ((x - .5) * 12) + 'deg) scale(1.02)';
+      t.style.setProperty('--mx', x * 100 + '%'); t.style.setProperty('--my', y * 100 + '%');
+    }, { passive: true });
+    // главный экран — сцена реагирует на курсор
+    var hf = $('.hero-frames');
+    $('#home').addEventListener('pointermove', function (e) {
+      if (body.classList.contains('calm')) return;
+      var x = e.clientX / innerWidth - .5, y = e.clientY / innerHeight - .5;
+      hf.style.transform = 'rotateY(' + x * 16 + 'deg) rotateX(' + -y * 10 + 'deg)';
+    });
+    $('#home').addEventListener('pointerleave', function () { hf.style.transform = ''; });
+    // ZinFoto — вращение мокапа в перспективе
+    var zs = $('.zin-stage3d'), zc = $('.zin-card3d');
+    zs.addEventListener('pointermove', function (e) {
+      var r = zs.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      zc.style.transform = 'rotateX(' + (-y * 26) + 'deg) rotateY(' + (x * 34) + 'deg) scale(1.02)';
+    });
+    zs.addEventListener('pointerleave', function () { zc.style.transform = ''; });
+    // персонаж — параллакс одним слоем (без деформации)
+    var cs = $('.char-stage'), ci = $('.char-img');
+    cs.addEventListener('pointermove', function (e) {
+      var r = cs.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      ci.style.transform = 'translate(' + x * 22 + 'px,' + y * 16 + 'px)';
+      $('.rs1').style.translate = (-x * 30) + 'px ' + (-y * 30) + 'px';
+      $('.rs2').style.translate = (x * 14) + 'px ' + (y * 14) + 'px';
+    });
+    cs.addEventListener('pointerleave', function () { ci.style.transform = ''; });
+    // телефоны Romina
+    var ph2 = $('.phones');
+    ph2.addEventListener('pointermove', function (e) {
+      var r = ph2.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      ph2.style.transform = 'rotateY(' + x * 14 + 'deg) rotateX(' + -y * 8 + 'deg)';
+    });
+    ph2.addEventListener('pointerleave', function () { ph2.style.transform = ''; });
+  }
+
+  /* ---------------- 3D-карусель ---------------- */
+  var carousel = $('.carousel'), ring = $('.carousel-ring'), cards = [];
+  var N = ART.length, step = 360 / N, rot = 0, target = null, vel = 0, dragging = false, lastInteract = -1e9, hoverC = false, front = -1, R = 500, cw = 260, tiltX = 0;
+  ART.forEach(function (a, i) {
+    var c = document.createElement('div'); c.className = 'c-card'; c.dataset.i = i;
+    c.innerHTML = '<img src="' + a.thumb + '" alt="' + a.t + '" draggable="false"><span class="c-zoom">⤢</span>';
+    c.style.setProperty('--glow', a.pal[0]);
+    ring.appendChild(c); cards.push(c);
+  });
+  function cSize() {
+    cw = Math.round(clamp(innerWidth * .2, 170, 270));
+    if (innerWidth < 640) cw = 180;
+    carousel.style.setProperty('--cw', cw + 'px');
+    R = Math.round(cw / (2 * Math.tan(Math.PI / N)) * 1.12);
+  }
+  cSize(); window.addEventListener('resize', cSize);
+  function norm(a) { a = ((a % 360) + 540) % 360 - 180; return a; }
+  function cRender() {
+    ring.style.transform = 'translateZ(' + (-R) + 'px) rotateX(' + (-6 + tiltX) + 'deg) rotateY(' + rot + 'deg)';
+    var best = 0, bestA = 999;
+    for (var i = 0; i < N; i++) {
+      var a = norm(i * step + rot), k = Math.max(0, 1 - Math.abs(a) / step);
+      cards[i].style.transform = 'rotateY(' + (i * step) + 'deg) translateZ(' + R + 'px) scale(' + (1 + .2 * k) + ')';
+      cards[i].style.filter = 'brightness(' + (.55 + .45 * Math.max(0, Math.cos(a * Math.PI / 180))) + ')';
+      cards[i].style.zIndex = Math.round(100 - Math.abs(a));
+      if (Math.abs(a) < bestA) { bestA = Math.abs(a); best = i; }
+    }
+    if (best !== front) {
+      if (front >= 0) cards[front].classList.remove('front');
+      front = best; cards[front].classList.add('front');
+      var art = ART[front];
+      $('.carousel-caption b').textContent = art.t;
+      $('.carousel-caption span').textContent = art.cat + ' · ' + (front + 1) + ' / ' + N;
+      var bg = $('.carousel-bg'); bg.style.setProperty('--a1', art.pal[0]); bg.style.setProperty('--a2', art.pal[1]);
+      bg.style.background = 'radial-gradient(60% 70% at 50% 50%, ' + art.pal[0] + ' 0%, ' + art.pal[1] + ' 45%, transparent 75%)';
+    }
+  }
+  function cLoop(t) {
+    requestAnimationFrame(cLoop);
+    var sec = $('#digital');
+    if (!sec.classList.contains('inview') || body.classList.contains('modal-open')) return;
+    var now = performance.now();
+    if (target !== null) { var d = target - rot; rot += d * .12; if (Math.abs(d) < .05) { rot = target; target = null; } }
+    else if (!dragging) {
+      if (Math.abs(vel) > .02) { rot += vel; vel *= .93; if (Math.abs(vel) <= .02) target = Math.round(rot / step) * step; }
+      else if (!hoverC && now - lastInteract > 3500 && !body.classList.contains('calm')) rot -= .07;
+    }
+    cRender();
+  }
+  cRender(); requestAnimationFrame(cLoop);
+  function cGo(dir) { lastInteract = performance.now(); vel = 0; var base = target !== null ? target : Math.round(rot / step) * step; target = base - dir * step; }
+  $$('.cbtn').forEach(function (b) { b.addEventListener('click', function () { cGo(+b.dataset.dir); }); });
+  carousel.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { cGo(1); e.preventDefault(); } else if (e.key === 'ArrowLeft') { cGo(-1); e.preventDefault(); }
+    else if (e.key === 'Enter') openLB('digital-all', front);
+  });
+  carousel.addEventListener('pointerenter', function () { hoverC = true; });
+  carousel.addEventListener('pointerleave', function () { hoverC = false; tiltX = 0; });
+  var dStart = null;
+  carousel.addEventListener('pointerdown', function (e) {
+    dStart = { x: e.clientX, rot: rot, t: performance.now(), lastX: e.clientX, moved: false, card: e.target.closest('.c-card') };
+    target = null; vel = 0; lastInteract = performance.now();
+  });
+  carousel.addEventListener('pointermove', function (e) {
+    var r = carousel.getBoundingClientRect(); tiltX = ((e.clientY - r.top) / r.height - .5) * -8;
+    if (!dStart) { if (!dragging && !body.classList.contains('calm')) rot += ((e.clientX - r.left) / r.width - .5) * -.12; return; }
+    var dx = e.clientX - dStart.x;
+    if (!dStart.moved && Math.abs(dx) > 6) { dStart.moved = true; dragging = true; carousel.classList.add('dragging'); try { carousel.setPointerCapture(e.pointerId); } catch (_) {} }
+    if (dStart.moved) { rot = dStart.rot + dx * .25; vel = (e.clientX - dStart.lastX) * .25; dStart.lastX = e.clientX; lastInteract = performance.now(); }
+  });
+  function cUp() {
+    if (!dStart) return;
+    var s = dStart; dStart = null; dragging = false; carousel.classList.remove('dragging'); lastInteract = performance.now();
+    if (!s.moved && s.card) {
+      var i = +s.card.dataset.i;
+      if (i === front) openLB('digital-all', i);
+      else { var a = norm(i * step + rot); target = rot - a; }
+    }
+  }
+  carousel.addEventListener('pointerup', cUp); carousel.addEventListener('pointercancel', cUp);
+
+  /* ---------------- Галерея с фильтрами ---------------- */
+  var grid = $('#artGrid');
+  ART.forEach(function (a, i) {
+    var f = document.createElement('figure'); f.className = 'art-item tilt'; f.dataset.cats = a.c.join(' ');
+    f.style.setProperty('--p1', a.pal[0]); f.style.setProperty('--p2', a.pal[1]); f.style.setProperty('--p3', a.pal[2]);
+    f.innerHTML = '<img src="' + a.thumb + '" alt="' + a.t + '" width="' + a.w + '" height="' + a.h + '" loading="lazy"><figcaption>' + a.t + '<small>' + a.cat + '</small></figcaption>';
+    f.addEventListener('click', function () { openLB('digital-all', i); });
+    grid.appendChild(f);
+  });
+  $$('.filter button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      $$('.filter button').forEach(function (x) { x.classList.toggle('on', x === b); });
+      var c = b.dataset.cat;
+      $$('.art-item').forEach(function (it) { it.classList.toggle('hide', c !== 'all' && it.dataset.cats.split(' ').indexOf(c) < 0); });
+    });
+  });
+
+  /* ---------------- Детали персонажа ---------------- */
+  function cropStyle(el, fx, fy, z, src) {
+    var px = (fx * z - .5) / (z - 1) * 100, py = (fy * z - .5) / (z - 1) * 100;
+    el.style.backgroundImage = 'url("' + src + '")';
+    el.style.backgroundSize = (z * 100) + '%';
+    el.style.backgroundPosition = clamp(px, 0, 100) + '% ' + clamp(py, 0, 100) + '%';
+    el.style.setProperty('--bz', (z * 100) + '%');
+  }
+  $$('.char-details .detail[data-fx]').forEach(function (d) {
+    var f = d.dataset.fx.split(',').map(Number);
+    cropStyle($('.detail-img', d), f[0], f[1], +d.dataset.z, CHAR_SRC);
+    d.addEventListener('click', function () { openLB('char', 0); });
+  });
+  (function () { // мини-детали в презентации
+    var box = $('.sc-details');
+    $$('.char-details .detail[data-fx]').forEach(function (d) {
+      var f = d.dataset.fx.split(','), el = document.createElement('div');
+      cropStyle(el, +f[0], +f[1], +d.dataset.z, CHAR_SRC);
+      el.innerHTML = '<span>' + $('span', d).textContent + '</span>'; box.appendChild(el);
+    });
+  })();
+
+  /* ---------------- Лента логотипов ---------------- */
+  var LOGOS = [
+    ['assets/romina/thumbs/logo-emblem.jpg', 'Romina', 'uiux', ''],
+    ['assets/zinfoto/thumbs/05-logo-dark.jpg', 'ZinFoto', 'zinfoto', ''],
+    ['assets/bk-wearshop/thumbs/composition.jpg', 'BK Wearshop', 'bk', 'object-position:0 0;transform:scale(1.7);transform-origin:22% 10%'],
+    ['assets/glow-mermaid/thumbs/01-logo.jpg', 'Glow Mermaid', 'glow', ''],
+    ['assets/student-council/thumbs/logo.jpg', 'Ученический совет Гагаузии', 'council', 'object-fit:contain'],
+    ['assets/school-emblem/thumbs/emblem.jpg', 'Герб лицея V. Moșkov', 'emblem', '']
+  ];
+  var lm = $('.lm-track');
+  for (var rep = 0; rep < 2; rep++) LOGOS.forEach(function (l) {
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'lm-item'; b.dataset.go = l[2];
+    b.setAttribute('aria-label', 'Перейти к проекту ' + l[1]);
+    b.innerHTML = '<i class="lm-in"><img src="' + l[0] + '" alt="" style="' + l[3] + '"></i><span>' + l[1] + '</span>';
+    if (rep) b.tabIndex = -1;
+    lm.appendChild(b);
+  });
+
+  /* ---------------- Декор проектов ---------------- */
+  (function () {
+    var bf = $('.bk-butterflies');
+    for (var i = 0; i < 9; i++) { var s = svgUse('s-butterfly'); var p = edgePos(); s.style.cssText = 'left:' + p[0] + '%;top:' + p[1] + '%;--s:' + (24 + rnd() * 40) + 'px;--t:' + (7 + rnd() * 6) + 's;--r:' + (rnd() * 60 - 30) + 'deg;animation-delay:' + (-rnd() * 8) + 's'; bf.appendChild(s); }
+    var bb = $('.bubbles');
+    for (i = 0; i < 26; i++) { var b = document.createElement('i'); b.style.cssText = 'left:' + rnd() * 100 + '%;--s:' + (8 + rnd() * 34) + 'px;--t:' + (9 + rnd() * 12) + 's;--dl:' + (-rnd() * 20) + 's;--dx:' + (rnd() * 120 - 60) + 'px'; bb.appendChild(b); }
+    var pl = $('.pearls');
+    for (i = 0; i < 12; i++) { var q = document.createElement('i'); p = edgePos(); q.style.cssText = 'left:' + p[0] + '%;top:' + p[1] + '%;--s:' + (12 + rnd() * 26) + 'px;--t:' + (5 + rnd() * 5) + 's;animation-delay:' + (-rnd() * 5) + 's'; pl.appendChild(q); }
+    var lv = $('.leaves'), cols = ['#ffd36e', '#ff8a3d', '#c8321a', '#ffb340', '#a8240f'];
+    for (i = 0; i < 22; i++) { s = svgUse('s-leaf'); s.style.cssText = 'left:' + rnd() * 100 + '%;--s:' + (20 + rnd() * 30) + 'px;--t:' + (10 + rnd() * 10) + 's;--dl:' + (-rnd() * 20) + 's;--dx:' + (rnd() * 200 - 100) + 'px;--c:' + cols[i % 5]; lv.appendChild(s); }
+    var sd = $('.spring-deco');
+    for (i = 0; i < 14; i++) { var kind = i % 4; s = svgUse(kind < 2 ? 's-flower' : kind === 2 ? 's-butterfly' : 's-bird', kind === 0 ? 'fl' : kind === 1 ? 'fl2' : kind === 2 ? 'bf' : 'bd'); p = edgePos(); s.style.cssText = 'left:' + p[0] + '%;top:' + p[1] + '%;--s:' + (22 + rnd() * 30) + 'px;--t:' + (kind === 3 ? 18 + rnd() * 10 : 5 + rnd() * 5) + 's;animation-delay:' + (-rnd() * 10) + 's'; sd.appendChild(s); }
+    var st = $('.sky-stars');
+    for (i = 0; i < 40; i++) { var t = document.createElement('i'); t.style.cssText = 'left:' + rnd() * 100 + '%;top:' + rnd() * 45 + '%;--t:' + (2 + rnd() * 4) + 's;animation-delay:' + (-rnd() * 4) + 's'; st.appendChild(t); }
+    var fs = $('.fs-track');
+    for (rep = 0; rep < 2; rep++) for (i = 8; i <= 38; i += 2) { var im = new Image(); im.src = pagePath('gagauzluk', i, true); im.alt = ''; im.loading = 'lazy'; fs.appendChild(im); }
+    // финал — фрагменты работ на орбитах
+    var thumbs = [ART[0].thumb, ART[5].thumb, ART[6].thumb, 'assets/glow-mermaid/thumbs/03-mermaid-illustration.jpg', 'assets/books/tepegoz/pages/thumbs/01.jpg', 'assets/magazines/guguscuk-24/pages/thumbs/01.jpg', 'assets/romina/thumbs/logo-character.jpg', ART[1].thumb, 'assets/school-emblem/thumbs/emblem.jpg', ART[3].thumb];
+    $$('.fin-orbit').forEach(function (box, bi) {
+      thumbs.forEach(function (src, k) {
+        var d = document.createElement('div'); d.className = 'fo';
+        var rad = (k % 2 ? 40 : 30) + (bi ? 2 : 0);
+        d.style.cssText = '--s:' + (k % 3 ? 80 : 104) + 'px;--rad:' + rad + 'vmax;--t:' + (60 + (k % 3) * 14) + 's;--dl:' + (-(k / thumbs.length) * (60 + (k % 3) * 14)) + 's';
+        if (innerWidth < 700) d.style.setProperty('--rad', (rad + 10) + 'vw');
+        d.innerHTML = '<img src="' + src + '" alt="" loading="lazy">'; box.appendChild(d);
+      });
+    });
+    // избранные развороты
+    $$('[data-book-spreads]').forEach(function (box) {
+      var b = box.dataset.bookSpreads;
+      box.dataset.pairs.split(',').forEach(function (pr) {
+        var p2 = pr.split('-').map(Number), w = document.createElement('div'); w.style.setProperty('--ar', BOOK_AR[b]);
+        w.innerHTML = '<div class="spread" role="button" tabindex="0" aria-label="Открыть на страницах ' + pr + '"><img loading="lazy" alt="Страница ' + p2[0] + '" src="' + pagePath(b, p2[0] - 1) + '"><img loading="lazy" alt="Страница ' + p2[1] + '" src="' + pagePath(b, p2[1] - 1) + '"></div><p class="spread-cap">Разворот · страницы ' + p2[0] + '–' + p2[1] + '</p>';
+        var sp = w.firstChild;
+        function go() { openReader(b, p2[0] - 1); }
+        sp.addEventListener('click', go); sp.addEventListener('keydown', function (e) { if (e.key === 'Enter') go(); });
+        box.appendChild(w);
+      });
+    });
+  })();
+
+  /* ---------------- Romina: смена экранов ---------------- */
+  var scrIdx = 0, sbtns = $('.screen-btns');
+  SCREENS.forEach(function (s, i) {
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = s[1]; if (!i) b.className = 'on';
+    b.addEventListener('click', function () { setScreen(i); }); sbtns.appendChild(b);
+  });
+  function swapImg(img, src) {
+    if (img.getAttribute('src') === src) return;
+    img.classList.add('swap');
+    setTimeout(function () { img.src = src; img.onload = function () { img.classList.remove('swap'); }; }, 220);
+  }
+  function setScreen(i) {
+    scrIdx = (i + SCREENS.length) % SCREENS.length;
+    $$('.screen-btns button').forEach(function (b, k) { b.classList.toggle('on', k === scrIdx); });
+    $('.rom-screen-name').textContent = SCREENS[scrIdx][1];
+    swapImg($('.p-center img'), ROM + SCREENS[scrIdx][0] + '.jpg');
+    swapImg($('.p-left img'), ROM + SCREENS[(scrIdx + SCREENS.length - 1) % SCREENS.length][0] + '.jpg');
+    swapImg($('.p-right img'), ROM + SCREENS[(scrIdx + 1) % SCREENS.length][0] + '.jpg');
+  }
+  setScreen(0);
+  $('.p-left').addEventListener('click', function () { setScreen(scrIdx - 1); });
+  $('.p-right').addEventListener('click', function () { setScreen(scrIdx + 1); });
+  $('.p-center').addEventListener('click', function () { openLB('rom-screens', scrIdx); });
+  function romScroll() {
+    var s = $('#uiux'), r = s.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > innerHeight) return;
+    var p = clamp((innerHeight / 2 - (r.top + r.height / 2)) / innerHeight, -1, 1);
+    $('.p-left').style.marginTop = (-p * 60) + 'px';
+    $('.p-right').style.marginTop = (p * 60) + 'px';
+    $('.p-center').style.marginTop = (p * 20) + 'px';
+  }
+
+  /* ---------------- Лайтбокс ---------------- */
+  var LB = {}; // группы
+  function addSet(name, items) { LB[name] = items; }
+  addSet('digital-all', ART.map(function (a) { return { src: a.full, cap: a.t + ' — ' + a.cat, pal: a.pal }; }));
+  addSet('zin-all', ZIN.map(function (z, i) { return { src: 'assets/zinfoto/' + z + '.jpg', cap: 'ZinFoto · ' + ZIN_T[i], pal: ['#55555e', '#0b0b0d'] }; }));
+  addSet('rom-screens', SCREENS.map(function (s) { return { src: ROM + s[0] + '.jpg', cap: 'Romina · ' + s[1], pal: ['#8f1d1d', '#2a0d0d'] }; }));
+  var PAL = { hero: ['#8755F5', '#241439'], trad: ['#c98a5a', '#3a2416'], char: ['#b8322a', '#2a1410'], zin: ['#55555e', '#0b0b0d'], bk: ['#7a5236', '#1a100c'], glow: ['#c39bff', '#4b2a8c'], council: ['#ff6fb5', '#1c4a6a'], emblem: ['#1ea08c', '#071a3a'], g22: ['#3ccf6e', '#0e3a2a'], gag: ['#9fc9e8', '#24304a'], rom: ['#8f1d1d', '#2a0d0d'] };
+  $$('[data-lb]').forEach(function (el) {
+    var g = el.dataset.lb, src = el.dataset.full || ($('img', el) || el).getAttribute('src');
+    var cap = (($('img', el) || el).getAttribute('alt')) || '';
+    LB[g] = LB[g] || [];
+    var idx = LB[g].findIndex(function (it) { return it.src === src; });
+    if (idx < 0) { LB[g].push({ src: src, cap: cap, pal: PAL[g] }); idx = LB[g].length - 1; }
+    el.addEventListener('click', function () { openLB(g, idx); });
+  });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-open-lb]'); if (!b) return;
+    openLB(b.dataset.openLb, +b.dataset.index || 0);
+  });
+  var lb = $('#lightbox'), lbImg = $('.lb-img'), lbStage = $('.lb-stage'), lbSet = [], lbI = 0, zoom = 1, pan = { x: 0, y: 0 };
+  function modalState() { body.classList.toggle('modal-open', lb.classList.contains('open') || $('#reader').classList.contains('open') || $('#present').classList.contains('open')); }
+  function openLB(g, i) {
+    lbSet = LB[g] || []; if (!lbSet.length) return;
+    lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); modalState(); showLB(i || 0);
+  }
+  function showLB(i) {
+    lbI = (i + lbSet.length) % lbSet.length; var it = lbSet[lbI];
+    zoom = 1; pan = { x: 0, y: 0 }; applyZoom();
+    lbImg.classList.add('loading');
+    var im = new Image(); im.onload = function () { lbImg.src = it.src; lbImg.alt = it.cap; lbImg.classList.remove('loading'); }; im.src = it.src;
+    $('.lb-count').textContent = (lbI + 1) + ' / ' + lbSet.length;
+    $('.lb-cap').textContent = it.cap || '';
+    var p = it.pal || ['#8755F5', '#241439'];
+    $('.lb-bg').style.setProperty('--lb1', p[0]); $('.lb-bg').style.setProperty('--lb2', p[p.length - 1]);
+    $('.lb-bg').style.background = 'radial-gradient(circle at 50% 40%, ' + mix(p[0]) + ', ' + mix(p[p.length - 1], .3) + ' 75%)';
+    $$('.lb-nav').forEach(function (b) { b.disabled = lbSet.length < 2; });
+  }
+  function mix(hex, k) { // затемнение цвета для фона
+    k = k === undefined ? .55 : k; var n = parseInt(hex.slice(1), 16);
+    return 'rgb(' + Math.round((n >> 16) * k) + ',' + Math.round(((n >> 8) & 255) * k) + ',' + Math.round((n & 255) * k) + ')';
+  }
+  function closeLB() { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); modalState(); }
+  function applyZoom() { lbImg.style.transform = 'translate(' + pan.x + 'px,' + pan.y + 'px) scale(' + zoom + ')'; lbStage.classList.toggle('zoomed', zoom > 1); }
+  function setZoom(z) { zoom = clamp(z, 1, 5); if (zoom === 1) pan = { x: 0, y: 0 }; applyZoom(); }
+  $('.lb-close').addEventListener('click', closeLB);
+  $('.lb-bg').addEventListener('click', closeLB);
+  $('.lb-nav.prev').addEventListener('click', function () { showLB(lbI - 1); });
+  $('.lb-nav.next').addEventListener('click', function () { showLB(lbI + 1); });
+  $$('.lb-tools [data-z]').forEach(function (b) { b.addEventListener('click', function () { var d = +b.dataset.z; setZoom(d === 0 ? 1 : zoom * (d > 0 ? 1.4 : 1 / 1.4)); }); });
+  lbStage.addEventListener('wheel', function (e) { e.preventDefault(); setZoom(zoom * (e.deltaY < 0 ? 1.15 : 1 / 1.15)); }, { passive: false });
+  lbStage.addEventListener('dblclick', function () { setZoom(zoom > 1 ? 1 : 2.2); });
+  var lbDrag = null;
+  lbStage.addEventListener('pointerdown', function (e) { if (e.target !== lbImg && zoom === 1) { closeLB(); return; } lbDrag = { x: e.clientX, y: e.clientY, px: pan.x, py: pan.y, moved: false }; try { lbStage.setPointerCapture(e.pointerId); } catch (_) {} });
+  lbStage.addEventListener('pointermove', function (e) {
+    if (!lbDrag) return; var dx = e.clientX - lbDrag.x, dy = e.clientY - lbDrag.y;
+    if (Math.abs(dx) + Math.abs(dy) > 5) lbDrag.moved = true;
+    if (zoom > 1) { pan.x = lbDrag.px + dx; pan.y = lbDrag.py + dy; lbImg.style.transition = 'none'; applyZoom(); }
+  });
+  lbStage.addEventListener('pointerup', function (e) {
+    if (!lbDrag) return; var d = lbDrag; lbDrag = null; lbImg.style.transition = '';
+    if (zoom === 1 && d.moved) { var dx = e.clientX - d.x; if (Math.abs(dx) > 50) showLB(lbI + (dx < 0 ? 1 : -1)); }
+  });
+
+  /* ---------------- Читалка ---------------- */
+  var reader = $('#reader'), rdBook = $('.rd-book'), fb = null, curBook = null, lastPages = {};
+  try { lastPages = JSON.parse(store('kk-pages') || '{}') || {}; } catch (e) { lastPages = {}; }
+  function openReader(b, page) {
+    var B = BOOKS[b]; if (!B) { if (b === 'guguscuk22') openLB('g22', 0); return; }
+    curBook = b;
+    $('.rd-title').textContent = B.title;
+    $('.rd-total').textContent = B.n;
+    $('.rd-goto input').max = B.n;
+    $('.rd-dl').href = B.pdf;
+    $('.rd-bg').style.background = 'radial-gradient(circle at 50% 30%, ' + B.bg[0] + ', ' + B.bg[1] + ' 75%)';
+    reader.classList.add('open'); reader.setAttribute('aria-hidden', 'false'); modalState();
+    // миниатюры
+    var tt = $('.rd-thumbs-track'); tt.innerHTML = '';
+    for (var i = 0; i < B.n; i++) (function (i) {
+      var bt = document.createElement('button'); bt.type = 'button'; bt.innerHTML = '<img loading="lazy" alt="Страница ' + (i + 1) + '" src="' + pagePath(b, i, true) + '"><span>' + (i + 1) + '</span>';
+      bt.addEventListener('click', function () { fb.goTo(i); }); tt.appendChild(bt);
+    })(i);
+    if (fb) fb.destroy();
+    var pages = []; for (i = 0; i < B.n; i++) pages.push(pagePath(b, i));
+    var start = page !== undefined ? page : (lastPages[b] || 0);
+    requestAnimationFrame(function () {
+      fb = new KFlipBook(rdBook, { pages: pages, aspect: B.aspect, startPage: start, onChange: rdChange });
+    });
+  }
+  function rdChange(info) {
+    var p = info.pages;
+    $('.rd-cur').textContent = p.length > 1 ? (p[0] + 1) + '–' + (p[1] + 1) : (p[0] + 1);
+    $('.rd-goto input').value = p[0] + 1;
+    lastPages[curBook] = p[p.length - 1]; store('kk-pages', JSON.stringify(lastPages));
+    $$('.rd-thumbs button').forEach(function (b, i) { b.classList.toggle('on', p.indexOf(i) >= 0); });
+    var on = $('.rd-thumbs button.on'); if (on && reader.classList.contains('thumbs-on')) on.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+    $('.rd-nav.prev').disabled = !fb || !fb.canPrev(); $('.rd-nav.next').disabled = !fb || !fb.canNext();
+    setTimeout(function () { if (fb) { $('.rd-nav.prev').disabled = !fb.canPrev(); $('.rd-nav.next').disabled = !fb.canNext(); } }, 0);
+  }
+  function closeReader() {
+    reader.classList.remove('open', 'thumbs-on'); reader.setAttribute('aria-hidden', 'true');
+    if (document.fullscreenElement === reader) document.exitFullscreen().catch(function () {});
+    setTimeout(function () { if (!reader.classList.contains('open') && fb) { fb.destroy(); fb = null; } }, 500);
+    modalState();
+  }
+  $('.rd-close').addEventListener('click', closeReader);
+  $('.rd-nav.prev').addEventListener('click', function () { fb && fb.prev(); });
+  $('.rd-nav.next').addEventListener('click', function () { fb && fb.next(); });
+  $('.rd-thumbs-btn').addEventListener('click', function () { reader.classList.toggle('thumbs-on'); setTimeout(function () { var on = $('.rd-thumbs button.on'); on && on.scrollIntoView({ block: 'nearest', inline: 'center' }); }, 420); });
+  $('.rd-goto').addEventListener('submit', function (e) { e.preventDefault(); var v = +$('.rd-goto input').value; if (fb && v >= 1) fb.goTo(v - 1); });
+  $('.rd-zoom').addEventListener('click', function () {
+    if (!fb) return; var B = BOOKS[curBook];
+    addSet('reader-zoom', fb.info().pages.map(function (i) { return { src: pagePath(curBook, i), cap: B.title + ' · страница ' + (i + 1), pal: B.bg }; }));
+    openLB('reader-zoom', 0); setZoom(1.6);
+  });
+  $('.rd-full').addEventListener('click', function () {
+    if (document.fullscreenElement === reader) document.exitFullscreen().catch(function () {});
+    else if (reader.requestFullscreen) reader.requestFullscreen().catch(function () {});
+  });
+
+  /* Анимация «книга вылетает в центр» */
+  function flyBook(srcEl, b) {
+    var img = srcEl && (srcEl.querySelector('.b-cover img') || srcEl.querySelector('img'));
+    if (!img || reduce || body.classList.contains('calm')) { openReader(b); return; }
+    var r = img.getBoundingClientRect(), B = BOOKS[b];
+    var fly = document.createElement('div'); fly.className = 'book-fly';
+    fly.style.cssText = 'left:' + r.left + 'px;top:' + r.top + 'px;width:' + r.width + 'px;height:' + r.height + 'px';
+    fly.innerHTML = '<img src="' + img.getAttribute('src') + '" alt="">'; body.appendChild(fly);
+    var H = innerHeight * .74, W = H * B.aspect;
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      fly.style.left = (innerWidth / 2 - W / 2) + 'px'; fly.style.top = (innerHeight / 2 - H / 2) + 'px';
+      fly.style.width = W + 'px'; fly.style.height = H + 'px'; fly.classList.add('open');
+    }); });
+    setTimeout(function () { openReader(b); }, 900);
+    setTimeout(function () { fly.style.opacity = '0'; }, 1050);
+    setTimeout(function () { fly.remove(); }, 1500);
+  }
+  document.addEventListener('click', function (e) {
+    var bk = e.target.closest('.book3d'), ob = e.target.closest('[data-open-book]');
+    if (bk) { var b = bk.dataset.book; if (b === 'guguscuk22') openLB('g22', 0); else flyBook(bk, b); return; }
+    if (ob) { if (ob.closest('#present')) openReader(ob.dataset.openBook); else flyBook(ob.querySelector('img') ? ob : null, ob.dataset.openBook); }
+  });
+
+  /* ---------------- Режим презентации ---------------- */
+  var pr = $('#present'), scenes = $$('.scene', pr), sIdx = 0;
+  var SC_PAL = [['#8755F5', '#F458AE', '#241439'], ['#6b3fa0', '#83D9FF', '#1b1036'], ['#b8322a', '#d9a066', '#2a1410'], ['#55555e', '#c39bff', '#120a18'], ['#ff6fb5', '#1ea08c', '#0b2a3a'], ['#e0561c', '#7a3fa0', '#2a1240'], ['#8f1d1d', '#e0b04a', '#2a0d0d'], ['#F458AE', '#8755F5', '#241439']];
+  var ORIG = ['50% 50%', '100% 50%', '0% 100%', '50% 0%', '100% 100%', '0% 0%', '50% 100%', '50% 50%'];
+  (function () {
+    var fan = $('.sc-fan');
+    ART.forEach(function (a, i) {
+      var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', a.t);
+      var ang = (i - (N - 1) / 2) * 8.5;
+      b.style.transform = 'translateX(-50%) rotate(' + ang + 'deg)';
+      b.dataset.ang = ang;
+      b.innerHTML = '<img src="' + a.thumb + '" alt="">';
+      b.addEventListener('mouseenter', function () { b.style.transform = 'translateX(-50%) rotate(' + ang + 'deg) translateY(-40px) scale(1.12)'; });
+      b.addEventListener('mouseleave', function () { b.style.transform = 'translateX(-50%) rotate(' + ang + 'deg)'; });
+      b.addEventListener('click', function () { openLB('digital-all', i); });
+      fan.appendChild(b);
+    });
+    var dots = $('.pr-dots');
+    scenes.forEach(function (s, i) {
+      var d = document.createElement('button'); d.type = 'button'; d.setAttribute('aria-label', s.dataset.t);
+      d.addEventListener('click', function () { showScene(i); }); dots.appendChild(d);
+    });
+  })();
+  function showScene(i) {
+    sIdx = clamp(i, 0, scenes.length - 1);
+    scenes.forEach(function (s, k) { s.style.clipPath = ''; s.classList.toggle('on', k === sIdx); });
+    var sc = scenes[sIdx]; sc.style.setProperty('clip-path', 'circle(150% at ' + ORIG[sIdx] + ')');
+    var p = SC_PAL[sIdx];
+    $('.pr-bg').style.background = 'radial-gradient(70% 60% at 30% 30%, ' + p[0] + ', transparent 70%), radial-gradient(60% 60% at 80% 80%, ' + p[1] + ', transparent 70%), ' + p[2];
+    $$('.pr-dots button').forEach(function (d, k) { d.classList.toggle('on', k === sIdx); });
+    $('.pr-count').textContent = (sIdx + 1) + ' / ' + scenes.length + ' · ' + sc.dataset.t;
+    // сцена 2: веер раскрывается
+    $$('.sc-fan button').forEach(function (b, k) {
+      var ang = +b.dataset.ang;
+      b.style.transform = 'translateX(-50%) rotate(' + (sIdx === 1 ? ang : 0) + 'deg)';
+    });
+  }
+  function hideScenesBefore() { scenes.forEach(function (s) { s.style.clipPath = 'circle(0% at ' + ORIG[scenes.indexOf(s)] + ')'; }); }
+  function openPresent() {
+    closeMenus(); hideScenesBefore();
+    pr.classList.add('open'); pr.setAttribute('aria-hidden', 'false'); modalState();
+    showScene(0);
+    var el = document.documentElement;
+    if (el.requestFullscreen && !document.fullscreenElement) {
+      el.requestFullscreen().then(function () {
+        if (navigator.keyboard && navigator.keyboard.lock) navigator.keyboard.lock(['Escape']).catch(function () {});
+      }).catch(function () {});
+    }
+  }
+  function closePresent() {
+    if (!pr.classList.contains('open')) return;
+    if (lb.classList.contains('open')) closeLB();
+    if (reader.classList.contains('open')) closeReader();
+    pr.classList.remove('open'); pr.setAttribute('aria-hidden', 'true'); modalState();
+    if (navigator.keyboard && navigator.keyboard.unlock) navigator.keyboard.unlock();
+    if (document.fullscreenElement) document.exitFullscreen().catch(function () {});
+  }
+  ['#presentBtn', '#presentBtnTop'].forEach(function (s) { $(s).addEventListener('click', openPresent); });
+  $$('[data-present]').forEach(function (b) { b.addEventListener('click', openPresent); });
+  $('.pr-btn.prev').addEventListener('click', function () { showScene(sIdx - 1); });
+  $('.pr-btn.next').addEventListener('click', function () { showScene(sIdx + 1); });
+  $('.pr-btn.close').addEventListener('click', closePresent);
+  document.addEventListener('fullscreenchange', function () {
+    if (document.fullscreenElement) return;
+    // Если браузер сам вышел из полноэкранного режима по Esc
+    if (pr.classList.contains('open')) {
+      if (lb.classList.contains('open')) closeLB();
+      else if (reader.classList.contains('open')) closeReader();
+      else closePresent();
+    }
+  });
+
+  /* ---------------- Клавиатура ---------------- */
+  document.addEventListener('keydown', function (e) {
+    if (e.target.matches && e.target.matches('input, textarea')) { if (e.key === 'Escape') e.target.blur(); return; }
+    var k = e.key;
+    if (lb.classList.contains('open')) {
+      if (k === 'Escape') closeLB();
+      else if (k === 'ArrowRight') showLB(lbI + 1);
+      else if (k === 'ArrowLeft') showLB(lbI - 1);
+      else if (k === '+' || k === '=') setZoom(zoom * 1.4);
+      else if (k === '-') setZoom(zoom / 1.4);
+      else return;
+      e.preventDefault(); return;
+    }
+    if (reader.classList.contains('open')) {
+      if (k === 'Escape') closeReader();
+      else if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') fb && fb.next();
+      else if (k === 'ArrowLeft' || k === 'PageUp') fb && fb.prev();
+      else if (k === 'Home') fb && fb.goTo(0);
+      else if (k === 'End') fb && fb.goTo(BOOKS[curBook].n - 1);
+      else return;
+      e.preventDefault(); return;
+    }
+    if (pr.classList.contains('open')) {
+      if (k === 'Escape') closePresent();
+      else if (k === 'ArrowRight' || k === ' ' || k === 'PageDown' || k === 'Enter' && e.target === document.body) showScene(sIdx + 1);
+      else if (k === 'ArrowLeft' || k === 'PageUp') showScene(sIdx - 1);
+      else if (k === 'Home') showScene(0);
+      else if (k === 'End') showScene(scenes.length - 1);
+      else return;
+      e.preventDefault(); return;
+    }
+    if (k === 'Escape') closeMenus();
+  });
+
+  /* ---------------- Переключатель эффектов ---------------- */
+  var fx = $('#fxToggle');
+  function setCalm(on) { body.classList.toggle('calm', on); fx.setAttribute('aria-pressed', on ? 'true' : 'false'); fx.textContent = on ? '✧ Эффекты выкл.' : '✦ Эффекты'; store('kk-calm', on ? '1' : '0'); }
+  fx.addEventListener('click', function () { setCalm(!body.classList.contains('calm')); });
+  setCalm(reduce || store('kk-calm') === '1');
+
+  document.addEventListener('visibilitychange', modalState);
+  onScroll();
+})();

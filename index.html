@@ -1,1 +1,776 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Моя творческая вселенная — Кристина Кирица</title><link rel="stylesheet" href="style.css"></head><body><div id="intro"><div class="orbit"></div><p>КРИСТИНА КИРИЦА / 2026</p><h1>ПОРТФОЛИО</h1><button id="skip">Пропустить вступление</button></div><header><a class="brand" href="#home">КК<span>✦</span></a><nav id="nav"></nav><button id="motion" aria-pressed="false">Эффекты: вкл.</button><button class="primary" data-present>Презентация</button></header><div id="progress"></div><main id="main"><section id="home" class="hero"><div class="hero-copy"><p class="eyebrow">КРИСТИНА КИРИЦА / ПОРТФОЛИО 2026</p><h1>Моя творческая<br><em>вселенная.</em></h1><p>Художник · Дизайнер · Иллюстратор</p><h2>Разные миры.<br>Один творческий взгляд.</h2><div class="actions"><a class="primary" href="#digital">Смотреть работы ↗</a><button data-present>Начать презентацию</button><a href="#about">Обо мне ↓</a></div></div><div class="hero-art" id="heroArt"><span class="ring"></span><span class="star">✦</span><span class="orb"></span></div><small class="footnote">ОТ ПЕРВОГО ШТРИХА ДО ЦЕЛОГО МИРА / 01—15</small></section></main><button id="top" aria-label="Наверх">↑</button><dialog id="presentation"><div class="modalbar"><span id="sceneCount"></span><button id="exitPresentation">Закрыть ×</button></div><div id="scene"></div><div class="controls"><button id="prevScene">← Назад</button><button id="nextScene">Далее →</button></div></dialog><dialog id="viewer"><div class="modalbar"><span id="viewTitle"></span><button data-close="viewer">Закрыть ×</button></div><div id="viewStage"><img id="viewImage" alt="Работа"></div><div class="controls"><button id="viewPrev">←</button><button id="viewZoom">Увеличить</button><button id="viewNext">→</button></div></dialog><dialog id="reader"><div class="modalbar"><strong id="bookTitle"></strong><button id="bookFull">На весь экран</button><a id="pdfDownload" download>Скачать PDF ↓</a><button data-close="reader">Закрыть ×</button></div><div id="bookViewport"><div id="spread"></div></div><div class="controls"><button id="bookPrev">←</button><label>Страница <input id="pageNumber" type="number" min="1"></label><span id="pageTotal"></span><button id="bookNext">→</button><button id="bookZoom">Увеличить</button><button id="thumbToggle">Миниатюры</button></div><div id="thumbs" hidden></div></dialog><script src="data.js"></script><script src="script.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кристина Кирица — Моя творческая вселенная · Портфолио 2026</title>
+<meta name="description" content="Портфолио Кристины Кирицы: цифровое и традиционное искусство, иллюстрация, дизайн персонажей, брендинг, упаковка, издательский дизайн, UI/UX.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="is-intro">
+
+<!-- ===== SVG-библиотека декоративных элементов ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="g-chrome" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/><stop offset=".25" stop-color="#cfc7e8"/>
+      <stop offset=".45" stop-color="#fdf2ff"/><stop offset=".6" stop-color="#9f8fc9"/>
+      <stop offset=".8" stop-color="#f6e9ff"/><stop offset="1" stop-color="#b9b1d6"/>
+    </linearGradient>
+    <linearGradient id="g-iri" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#83D9FF"/><stop offset=".35" stop-color="#FFF0F8"/>
+      <stop offset=".6" stop-color="#F458AE"/><stop offset="1" stop-color="#8755F5"/>
+    </linearGradient>
+    <linearGradient id="g-gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff3c4"/><stop offset=".4" stop-color="#e0b04a"/>
+      <stop offset=".7" stop-color="#fff0b8"/><stop offset="1" stop-color="#a8761f"/>
+    </linearGradient>
+    <symbol id="s-sparkle" viewBox="0 0 100 100"><path d="M50 0C54 36 64 46 100 50C64 54 54 64 50 100C46 64 36 54 0 50C36 46 46 36 50 0Z"/></symbol>
+    <symbol id="s-star" viewBox="0 0 100 100"><path d="M50 4l13.5 30.5L96 38 71 60l7.5 33L50 76 21.5 93 29 60 4 38l32.5-3.5z"/></symbol>
+    <symbol id="s-rosette" viewBox="0 0 200 200">
+      <g fill="none" stroke="currentColor" stroke-width="3">
+        <circle cx="100" cy="100" r="92"/><circle cx="100" cy="100" r="78" stroke-dasharray="6 6"/>
+        <path d="M100 22l18 32-18 18-18-18zM100 178l18-32-18-18-18 18zM22 100l32-18 18 18-18 18zM178 100l-32-18-18 18 18 18z"/>
+        <path d="M45 45l30 8 4 22-22-4zM155 45l-30 8-4 22 22-4zM45 155l30-8 4-22-22 4zM155 155l-30-8-4-22 22 4z"/>
+        <rect x="88" y="88" width="24" height="24" transform="rotate(45 100 100)"/>
+      </g>
+    </symbol>
+    <symbol id="s-butterfly" viewBox="0 0 100 80"><path d="M50 40C40 8 8 0 4 14s16 26 40 26C20 42 6 58 16 72s30-6 34-28c4 22 24 42 34 28S80 42 56 40c24 0 44-12 40-26S60 8 50 40z"/></symbol>
+    <symbol id="s-shell" viewBox="0 0 100 100"><path d="M50 92L8 40C20 14 80 14 92 40z" /><g fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2.5"><path d="M50 92L22 28M50 92L38 22M50 92V20M50 92L62 22M50 92L78 28"/></g></symbol>
+    <symbol id="s-leaf" viewBox="0 0 100 100"><path d="M50 2C70 20 96 30 86 60 78 84 58 90 50 98 42 90 22 84 14 60 4 30 30 20 50 2z"/><path d="M50 10V96" stroke="rgba(0,0,0,.25)" stroke-width="3" fill="none"/></symbol>
+    <symbol id="s-flower" viewBox="0 0 100 100"><g><circle cx="50" cy="24" r="20"/><circle cx="76" cy="44" r="20"/><circle cx="66" cy="74" r="20"/><circle cx="34" cy="74" r="20"/><circle cx="24" cy="44" r="20"/></g><circle cx="50" cy="50" r="14" fill="#ffd36e"/></symbol>
+    <symbol id="s-bird" viewBox="0 0 100 60"><path d="M2 30C20 10 36 12 50 30 64 12 80 10 98 30 80 22 64 26 50 44 36 26 20 22 2 30z"/></symbol>
+    <symbol id="s-cloud" viewBox="0 0 200 90"><path d="M30 80C8 80 2 58 18 50 12 30 40 20 54 34 60 8 104 4 114 30 130 14 168 22 166 48 196 48 198 80 170 80z"/></symbol>
+    <symbol id="s-ornament" viewBox="0 0 120 40"><g fill="currentColor"><path d="M0 20L10 10 20 20 10 30zM20 20L30 10 40 20 30 30zM40 20L50 10 60 20 50 30zM60 20L70 10 80 20 70 30zM80 20L90 10 100 20 90 30zM100 20L110 10 120 20 110 30z"/></g><g fill="none" stroke="currentColor" stroke-width="2"><path d="M0 4H120M0 36H120"/></g></symbol>
+    <filter id="f-grain"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  </defs>
+</svg>
+
+<!-- ===== Живой фон ===== -->
+<div class="world-bg" aria-hidden="true">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div>
+  <div class="holo-sheen"></div>
+</div>
+<canvas id="particles" aria-hidden="true"></canvas>
+<div class="cursor-glow" aria-hidden="true"></div>
+
+<!-- ===== Заставка ===== -->
+<div id="intro" class="intro" aria-label="Вступление">
+  <div class="intro-glow"></div>
+  <div class="intro-rings">
+    <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
+  </div>
+  <div class="intro-stars"></div>
+  <div class="intro-frags">
+    <img src="assets/digital-art/thumbs/01-blonde-portrait.jpg" alt="" class="frag f1" width="596" height="760">
+    <img src="assets/digital-art/thumbs/06-violet-hair.jpg" alt="" class="frag f2" width="569" height="760">
+    <img src="assets/digital-art/thumbs/07-pink-bob.jpg" alt="" class="frag f3" width="569" height="760">
+    <img src="assets/character-design/thumbs/romina-national-costume.jpg" alt="" class="frag f4" width="507" height="760">
+    <img src="assets/digital-art/thumbs/02-summer-popsicle.jpg" alt="" class="frag f5" width="582" height="760">
+  </div>
+  <div class="intro-title">
+    <div class="intro-name">КРИСТИНА КИРИЦА</div>
+    <div class="intro-word" data-split>ПОРТФОЛИО</div>
+    <div class="intro-year">2026</div>
+  </div>
+  <button class="intro-skip" type="button">Пропустить вступление →</button>
+</div>
+
+<!-- ===== Навигация ===== -->
+<header class="topbar">
+  <div class="progress"><span></span></div>
+  <a href="#home" class="logo" data-go="home"><span class="logo-k">К</span><span class="logo-t">Кристина Кирица</span></a>
+  <nav class="menu" aria-label="Основное меню">
+    <button class="burger" type="button" aria-label="Открыть меню"><span></span><span></span><span></span></button>
+    <ul class="menu-list">
+      <li><a href="#home" data-go="home">Главная</a></li>
+      <li><a href="#about" data-go="about">Обо мне</a></li>
+      <li class="has-sub" data-group="art"><button type="button">Искусство</button>
+        <ul class="sub">
+          <li><a href="#digital" data-go="digital">Цифровое искусство</a></li>
+          <li><a href="#traditional" data-go="traditional">Традиционное искусство</a></li>
+          <li><a href="#characters" data-go="characters">Дизайн персонажей</a></li>
+        </ul></li>
+      <li class="has-sub" data-group="graphic"><button type="button">Графический дизайн</button>
+        <ul class="sub">
+          <li><a href="#graphic" data-go="graphic">Лента логотипов</a></li>
+          <li><a href="#zinfoto" data-go="zinfoto">ZinFoto</a></li>
+          <li><a href="#bk" data-go="bk">BK Wearshop</a></li>
+          <li><a href="#glow" data-go="glow">Glow Mermaid · упаковка</a></li>
+          <li><a href="#council" data-go="council">Ученический совет Гагаузии</a></li>
+          <li><a href="#emblem" data-go="emblem">Герб лицея V. Moșkov</a></li>
+        </ul></li>
+      <li class="has-sub" data-group="publish"><button type="button">Издательский дизайн</button>
+        <ul class="sub">
+          <li><a href="#magazines" data-go="magazines">Библиотека изданий</a></li>
+          <li><a href="#guguscuk" data-go="guguscuk">Журнал Guguşçuk</a></li>
+          <li><a href="#books" data-go="books">Книга Tepägöz</a></li>
+          <li><a href="#catalogs" data-go="catalogs">Фотокаталог Gagauzluk</a></li>
+        </ul></li>
+      <li class="has-sub" data-group="digitalp"><button type="button">Цифровые проекты</button>
+        <ul class="sub">
+          <li><a href="#uiux" data-go="uiux">Romina · мобильное приложение</a></li>
+          <li><a href="#web" data-go="web">Веб-дизайн</a></li>
+          <li><a href="#finale" data-go="finale">Завершение</a></li>
+        </ul></li>
+    </ul>
+  </nav>
+  <div class="tools">
+    <span class="sec-counter"><b>01</b> / 15</span>
+    <button class="tool-btn" id="fxToggle" type="button" title="Отключить интенсивные эффекты" aria-pressed="false">✦ Эффекты</button>
+    <button class="tool-btn accent magnetic" id="presentBtnTop" type="button">▶ Презентация</button>
+  </div>
+</header>
+
+<!-- Быстрое переключение проектов -->
+<aside class="dots" aria-label="Разделы"></aside>
+<button class="to-top magnetic" type="button" aria-label="Наверх">↑</button>
+
+<main id="main">
+
+<!-- 01 ГЛАВНАЯ -->
+<section id="home" class="section hero" data-num="01" data-title="Главная" data-colors="#8755F5,#F458AE,#83D9FF,#241439">
+  <div class="deco" data-stars="10" data-spheres="4" data-rings="2"></div>
+  <div class="hero-stage">
+    <div class="orbit o1"><span class="orb-item"><svg><use href="#s-sparkle"/></svg></span></div>
+    <div class="orbit o2"><span class="orb-item sphere"></span></div>
+    <div class="orbit o3"><span class="orb-item"><svg class="gold"><use href="#s-star"/></svg></span></div>
+    <div class="hero-frames tilt-scene">
+      <figure class="hframe hf-side hf1" data-lb="hero" data-full="assets/digital-art/06-violet-hair.jpg"><img src="assets/digital-art/thumbs/06-violet-hair.jpg" alt="Цифровой портрет: девушка с фиолетовыми волосами" width="569" height="760"></figure>
+      <figure class="hframe hf-side hf2" data-lb="hero" data-full="assets/digital-art/07-pink-bob.jpg"><img src="assets/digital-art/thumbs/07-pink-bob.jpg" alt="Цифровой портрет: розовое каре" width="569" height="760"></figure>
+      <figure class="hframe hf-main" data-lb="hero" data-full="assets/digital-art/01-blonde-portrait.jpg"><img src="assets/digital-art/01-blonde-portrait.jpg" alt="Цифровой портрет: светловолосая девушка" width="1004" height="1280"></figure>
+      <figure class="hframe hf-side hf3" data-lb="hero" data-full="assets/digital-art/02-summer-popsicle.jpg"><img src="assets/digital-art/thumbs/02-summer-popsicle.jpg" alt="Полуреалистичная иллюстрация: летнее настроение" width="582" height="760"></figure>
+      <figure class="hframe hf-side hf4" data-lb="hero" data-full="assets/character-design/romina-national-costume.jpg"><img src="assets/character-design/thumbs/romina-national-costume.jpg" alt="Персонаж Romina в национальном костюме" width="507" height="760"></figure>
+    </div>
+  </div>
+  <div class="hero-text">
+    <p class="kicker">Портфолио · 2026</p>
+    <h1 class="hero-name"><span data-split>КРИСТИНА</span> <span data-split>КИРИЦА</span></h1>
+    <p class="hero-universe holo-text">МОЯ ТВОРЧЕСКАЯ ВСЕЛЕННАЯ</p>
+    <p class="hero-roles">Художник · Дизайнер · Иллюстратор</p>
+    <p class="hero-slogan">«Разные миры. Один творческий взгляд».</p>
+    <div class="hero-btns">
+      <a href="#digital" data-go="digital" class="btn btn-holo magnetic">Смотреть работы</a>
+      <button type="button" class="btn btn-glass magnetic" id="presentBtn">▶ Начать презентацию</button>
+      <a href="#about" data-go="about" class="btn btn-ghost magnetic">Обо мне</a>
+    </div>
+  </div>
+  <div class="scroll-hint">прокрутите <span></span></div>
+</section>
+
+<!-- 02 ОБО МНЕ -->
+<section id="about" class="section about" data-num="02" data-title="Обо мне" data-colors="#F458AE,#FFB69E,#8755F5,#2a1440">
+  <div class="deco" data-stars="7" data-spheres="2" data-rings="2"></div>
+  <div class="wrap about-grid">
+    <div class="about-visual">
+      <div class="about-ring"><svg viewBox="0 0 300 300"><defs><path id="circ" d="M150 150m-120 0a120 120 0 1 1 240 0a120 120 0 1 1-240 0"/></defs><text><textPath href="#circ">ИСКУССТВО · ДИЗАЙН · ИЛЛЮСТРАЦИЯ · БРЕНДИНГ · UI/UX · КУЛЬТУРА · </textPath></text></svg></div>
+      <div class="about-mosaic">
+        <img src="assets/digital-art/thumbs/05-auburn-bow.jpg" alt="Фрагмент работы" class="am a1 reveal-mask" width="569" height="760">
+        <img src="assets/glow-mermaid/thumbs/03-mermaid-illustration.jpg" alt="Фрагмент работы Glow Mermaid" class="am a2 reveal-mask" width="537" height="760">
+        <img src="assets/books/tepegoz/pages/thumbs/01.jpg" alt="Обложка Tepägöz" class="am a3 reveal-mask" width="171" height="240">
+        <img src="assets/romina/thumbs/logo-character.jpg" alt="Логотип Romina" class="am a4 reveal-mask" width="760" height="760">
+      </div>
+    </div>
+    <div class="about-text">
+      <p class="sec-label"><span>02</span> Обо мне</p>
+      <h2 class="kinetic" data-split>Привет, я&nbsp;Кристина</h2>
+      <p class="about-quote reveal-up">Я — Кристина Кирица, многопрофильный дизайнер и художник. В своём творчестве я объединяю искусство, современные технологии, культуру и визуальные истории. Мне интересно создавать уникальные образы, разрабатывать фирменные стили, иллюстрировать книги и журналы, проектировать цифровые интерфейсы и превращать идеи в полноценные визуальные миры.</p>
+      <ul class="chips reveal-up">
+        <li>Цифровое искусство</li><li>Традиционное искусство</li><li>Иллюстрация</li><li>Дизайн персонажей</li>
+        <li>Графический дизайн</li><li>Брендинг</li><li>Визуальная айдентика</li><li>Дизайн упаковки</li>
+        <li>Журналы и книги</li><li>Культурные проекты</li><li>UI/UX</li><li>Мобильные приложения</li><li>Веб-дизайн</li>
+      </ul>
+      <p class="about-sub">«От первого штриха до целого мира».</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 ЦИФРОВОЕ ИСКУССТВО -->
+<section id="digital" class="section digital" data-num="03" data-title="Цифровое искусство" data-colors="#8755F5,#83D9FF,#F458AE,#1b1036">
+  <div class="deco" data-stars="8" data-spheres="3" data-rings="1"></div>
+  <div class="wrap">
+    <p class="sec-label"><span>03</span> Цифровое искусство</p>
+    <h2 class="sec-title kinetic" data-split>Мир моих иллюстраций</h2>
+    <p class="sec-lead">Интерактивная выставка: перетаскивайте карусель, используйте стрелки или просто наблюдайте. Нажмите на работу, чтобы открыть её на весь экран.</p>
+  </div>
+  <div class="carousel-zone">
+    <div class="carousel-bg"></div>
+    <div class="carousel" tabindex="0" aria-label="3D-карусель работ">
+      <div class="carousel-ring"></div>
+    </div>
+    <div class="carousel-ui">
+      <button class="cbtn magnetic" data-dir="-1" type="button" aria-label="Предыдущая работа">←</button>
+      <div class="carousel-caption"><b></b><span></span></div>
+      <button class="cbtn magnetic" data-dir="1" type="button" aria-label="Следующая работа">→</button>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="filter" role="tablist" aria-label="Направления">
+      <button class="on" data-cat="all" type="button">Все работы</button>
+      <button data-cat="portrait" type="button">Цифровые портреты</button>
+      <button data-cat="semi" type="button">Полуреалистичные иллюстрации</button>
+      <button data-cat="stylized" type="button">Стилизованные персонажи</button>
+      <button data-cat="fanart" type="button">Фан-арт</button>
+      <button data-cat="experiment" type="button">Художественные эксперименты</button>
+      <button data-cat="vintage" type="button">Винтажная эстетика</button>
+    </div>
+    <div class="art-grid" id="artGrid"></div>
+  </div>
+</section>
+
+<!-- 04 ТРАДИЦИОННОЕ ИСКУССТВО -->
+<section id="traditional" class="section traditional" data-num="04" data-title="Традиционное искусство" data-colors="#FFB69E,#e8c89a,#c98a5a,#3a2416">
+  <div class="paper-tex"></div>
+  <svg class="pencil-lines" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M40 120C200 60 320 180 480 110S760 40 900 130 1120 90 1180 60"/>
+    <path d="M20 700C180 640 300 760 520 690S820 620 980 700 1150 680 1190 650"/>
+    <path d="M90 300c40 60 10 140 60 200s30 120 80 160"/>
+    <path d="M1100 220c-50 50-20 130-70 190s-20 130-60 180"/>
+  </svg>
+  <div class="wrap trad-grid">
+    <div class="trad-text">
+      <p class="sec-label dark"><span>04</span> Традиционное искусство</p>
+      <h2 class="sec-title kinetic dark" data-split>С чего начинается искусство</h2>
+      <p class="sec-lead dark">Карандашный рисунок — основа, с которой начинается любой мой мир: линия, тон, внимание к форме и характеру.</p>
+      <p class="ref-note">На работе указан художественный референс: <b>Harrison Fisher</b>.</p>
+      <button class="btn btn-paper magnetic" type="button" data-open-lb="trad" data-index="0">Рассмотреть рисунок</button>
+    </div>
+    <div class="album">
+      <div class="album-sheet" data-lb="trad" data-full="assets/traditional-art/pencil-study-harrison-fisher.jpg">
+        <img src="assets/traditional-art/pencil-study-harrison-fisher.jpg" alt="Карандашный рисунок, референс Harrison Fisher" loading="lazy" width="907" height="1280">
+      </div>
+      <div class="album-shadow"></div>
+      <svg class="pencil-doodle" viewBox="0 0 200 200"><path d="M20 160C40 100 80 40 160 30M30 180c50-20 90-60 140-130"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- 05 ДИЗАЙН ПЕРСОНАЖЕЙ -->
+<section id="characters" class="section characters" data-num="05" data-title="Дизайн персонажей" data-colors="#b8322a,#f2e4cc,#7a4b2a,#2a1410">
+  <div class="deco" data-stars="5" data-spheres="1" data-rings="1"></div>
+  <div class="wrap">
+    <p class="sec-label"><span>05</span> Дизайн персонажей</p>
+    <h2 class="sec-title kinetic" data-split>Romina</h2>
+    <p class="sec-lead">Персонаж в национальном костюме — лицо проекта Romina. Ниже — полноразмерная иллюстрация и детали образа.</p>
+  </div>
+  <div class="wrap char-grid">
+    <div class="char-stage parallax-stage">
+      <svg class="rosette rs1"><use href="#s-rosette"/></svg>
+      <svg class="rosette rs2"><use href="#s-rosette"/></svg>
+      <div class="char-halo"></div>
+      <img class="char-img" data-lb="char" data-full="assets/character-design/romina-national-costume.jpg" src="assets/character-design/romina-cutout.png" alt="Персонаж Romina в национальном костюме" loading="lazy" width="832" height="1248">
+    </div>
+    <div class="char-details">
+      <div class="detail" data-fx="0.42,0.10" data-z="4.2"><div class="detail-img"></div><span>Лицо</span></div>
+      <div class="detail" data-fx="0.27,0.50" data-z="2.6"><div class="detail-img"></div><span>Волосы</span></div>
+      <div class="detail" data-fx="0.52,0.24" data-z="3.6"><div class="detail-img"></div><span>Орнаменты</span></div>
+      <div class="detail" data-fx="0.48,0.62" data-z="2.4"><div class="detail-img"></div><span>Национальный костюм</span></div>
+      <div class="detail palette-card"><div class="swatches"><i style="--c:#7a4b2a"></i><i style="--c:#b8322a"></i><i style="--c:#231816"></i><i style="--c:#f2e4cc"></i><i style="--c:#d9a066"></i></div><span>Цветовые решения</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 ГРАФИЧЕСКИЙ ДИЗАЙН -->
+<section id="graphic" class="section graphic" data-num="06" data-title="Графический дизайн" data-colors="#F458AE,#8755F5,#FFB69E,#1e1030">
+  <div class="deco" data-stars="6" data-spheres="2" data-rings="2"></div>
+  <div class="wrap">
+    <p class="sec-label"><span>06</span> Графический дизайн</p>
+    <h2 class="sec-title kinetic" data-split>Знаки и миры брендов</h2>
+    <p class="sec-lead">Каждый логотип — вход в отдельное пространство. Наведите курсор и нажмите, чтобы перейти к проекту.</p>
+  </div>
+  <div class="logo-marquee">
+    <div class="lm-track">
+      <!-- заполняется скриптом -->
+    </div>
+  </div>
+  <div class="kinetic-band"><span>ФИРМЕННЫЙ СТИЛЬ ✦ АЙДЕНТИКА ✦ УПАКОВКА ✦ ПЕЧАТЬ ✦ ЛОГОТИПЫ ✦ ФИРМЕННЫЙ СТИЛЬ ✦ АЙДЕНТИКА ✦ УПАКОВКА ✦ ПЕЧАТЬ ✦ ЛОГОТИПЫ ✦&nbsp;</span></div>
+</section>
+
+<!-- 07 ЛОГОТИПЫ И ФИРМЕННЫЙ СТИЛЬ -->
+<section id="identity" class="section identity" data-num="07" data-title="Логотипы и фирменный стиль" data-colors="#2a2a2e,#9a9aa5,#e9e9ee,#0b0b0d">
+  <!-- ZinFoto -->
+  <div id="zinfoto" class="project zinfoto">
+    <div class="grain"></div>
+    <div class="zin-light"></div>
+    <div class="wrap">
+      <p class="sec-label"><span>07</span> Логотипы и фирменный стиль</p>
+      <div class="proj-head">
+        <h2 class="proj-title zin-title" data-split>ZinFoto</h2>
+        <p class="proj-meta">Монохромная айдентика фотографа · Brand identity / Print design · 13 материалов</p>
+      </div>
+      <div class="zin-stage3d tilt-scene">
+        <div class="zin-card3d" data-lb="zin" data-full="assets/zinfoto/07-business-cards-mockup.jpg"><img src="assets/zinfoto/07-business-cards-mockup.jpg" alt="ZinFoto — мокап визиток" loading="lazy" width="1240" height="930"></div>
+        <p class="hint">Двигайте курсор — мокап вращается в перспективе</p>
+      </div>
+      <div class="zin-groups">
+        <div class="zg"><h3>Логотип · светлая и тёмная версии</h3><div class="zg-row">
+          <figure class="develop" data-lb="zin" data-full="assets/zinfoto/02-logo-light.jpg"><img src="assets/zinfoto/thumbs/02-logo-light.jpg" alt="ZinFoto — логотип, светлая версия" loading="lazy" width="760" height="760"><figcaption>Светлая версия</figcaption></figure>
+          <figure class="develop" data-lb="zin" data-full="assets/zinfoto/05-logo-dark.jpg"><img src="assets/zinfoto/thumbs/05-logo-dark.jpg" alt="ZinFoto — логотип, тёмная версия" loading="lazy" width="760" height="492"><figcaption>Тёмная версия</figcaption></figure>
+          <figure class="develop" data-lb="zin" data-full="assets/zinfoto/03-logo-variant.jpg"><img src="assets/zinfoto/thumbs/03-logo-variant.jpg" alt="ZinFoto — вариант логотипа" loading="lazy" width="760" height="760"><figcaption>Вариант знака</figcaption></figure>
+        </div></div>
+        <div class="zg"><h3>Фирменные композиции</h3><div class="zg-row zg-wide">
+          <figure class="develop tall" data-lb="zin" data-full="assets/zinfoto/01-composition.jpg"><img src="assets/zinfoto/thumbs/01-composition.jpg" alt="ZinFoto — фирменная композиция" loading="lazy" width="380" height="760"><figcaption>Композиция айдентики</figcaption></figure>
+          <figure class="develop tall" data-lb="zin" data-full="assets/zinfoto/11-poster-logo.jpg"><img src="assets/zinfoto/thumbs/11-poster-logo.jpg" alt="ZinFoto — постер с логотипом" loading="lazy" width="377" height="760"><figcaption>Постер со знаком</figcaption></figure>
+        </div></div>
+        <div class="zg"><h3>Визитки</h3><div class="zg-row">
+          <figure class="develop" data-lb="zin" data-full="assets/zinfoto/06-business-card.jpg"><img src="assets/zinfoto/thumbs/06-business-card.jpg" alt="ZinFoto — визитка" loading="lazy" width="760" height="492"><figcaption>Визитка</figcaption></figure>
+          <figure class="develop" data-lb="zin" data-full="assets/zinfoto/07-business-cards-mockup.jpg"><img src="assets/zinfoto/thumbs/07-business-cards-mockup.jpg" alt="ZinFoto — мокап визиток" loading="lazy" width="760" height="570"><figcaption>Мокап визиток</figcaption></figure>
+        </div></div>
+        <div class="zg"><h3>Постеры</h3><div class="zg-row">
+          <figure class="develop" data-lb="zin" data-full="assets/zinfoto/04-poster-captured-moment.jpg"><img src="assets/zinfoto/thumbs/04-poster-captured-moment.jpg" alt="ZinFoto — постер Captured moment" loading="lazy" width="760" height="381"><figcaption>Captured moment</figcaption></figure>
+          <figure class="develop tall" data-lb="zin" data-full="assets/zinfoto/08-poster-portrait.jpg"><img src="assets/zinfoto/thumbs/08-poster-portrait.jpg" alt="ZinFoto — портретный постер" loading="lazy" width="608" height="760"><figcaption>Портретный постер</figcaption></figure>
+          <figure class="develop tall" data-lb="zin" data-full="assets/zinfoto/12-poster-best-photo.jpg"><img src="assets/zinfoto/thumbs/12-poster-best-photo.jpg" alt="ZinFoto — постер The best photo of your life" loading="lazy" width="377" height="760"><figcaption>The best photo of your life</figcaption></figure>
+        </div></div>
+        <div class="zg"><h3>Фотобуклет · бирки · мокапы</h3><div class="zg-row">
+          <figure class="develop" data-lb="zin" data-full="assets/zinfoto/09-booklet.jpg"><img src="assets/zinfoto/thumbs/09-booklet.jpg" alt="ZinFoto — фотобуклет" loading="lazy" width="760" height="570"><figcaption>Фотобуклет</figcaption></figure>
+          <figure class="develop" data-lb="zin" data-full="assets/zinfoto/10-booklet-open.jpg"><img src="assets/zinfoto/thumbs/10-booklet-open.jpg" alt="ZinFoto — разворот фотобуклета" loading="lazy" width="760" height="506"><figcaption>Разворот буклета</figcaption></figure>
+          <figure class="develop" data-lb="zin" data-full="assets/zinfoto/13-tag.jpg"><img src="assets/zinfoto/thumbs/13-tag.jpg" alt="ZinFoto — бирка" loading="lazy" width="760" height="570"><figcaption>Бирка</figcaption></figure>
+        </div></div>
+      </div>
+      <button class="btn btn-silver magnetic" type="button" data-open-lb="zin-all" data-index="0">Смотреть все 13 страниц по порядку</button>
+      <div class="hidden-set" data-set="zin-all"></div>
+    </div>
+  </div>
+
+  <!-- BK Wearshop -->
+  <div id="bk" class="project bk">
+    <div class="bk-glow"></div>
+    <div class="bk-butterflies" aria-hidden="true"></div>
+    <div class="bk-kinetic" aria-hidden="true"><span>BK WEARSHOP · FASHION IDENTITY · BK WEARSHOP · FASHION IDENTITY ·&nbsp;</span></div>
+    <div class="wrap bk-grid">
+      <div class="bk-text">
+        <p class="proj-kicker">Айдентика магазина одежды</p>
+        <h2 class="proj-title bk-title" data-split>BK Wearshop</h2>
+        <p class="proj-meta light">Fashion identity · логотип, фирменная палитра, мокапы</p>
+        <p class="bk-desc">Атмосфера модного журнала: шоколадные и золотистые оттенки, элегантная каллиграфия и сдержанная палитра.</p>
+        <div class="bk-palette" aria-label="Фирменная палитра (по композиции)"><i style="--c:#3b2a24"></i><i style="--c:#0f0d0c"></i><i style="--c:#6e6560"></i><i style="--c:#f4f1ee"></i><i style="--c:#c9a46a"></i></div>
+      </div>
+      <figure class="bk-main tilt" data-lb="bk" data-full="assets/bk-wearshop/composition.jpg">
+        <img src="assets/bk-wearshop/composition.jpg" alt="BK Wearshop — оригинальная композиция айдентики" loading="lazy" width="880" height="1280">
+        <span class="shine"></span>
+      </figure>
+    </div>
+    <div class="wrap bk-crops">
+      <div class="crop tilt" data-lb="bk" data-full="assets/bk-wearshop/composition.jpg" style="--bx:20%;--by:12%;--bz:260%"><span>Логотип</span></div>
+      <div class="crop tilt" data-lb="bk" data-full="assets/bk-wearshop/composition.jpg" style="--bx:50%;--by:50%;--bz:220%"><span>Палитра</span></div>
+      <div class="crop tilt" data-lb="bk" data-full="assets/bk-wearshop/composition.jpg" style="--bx:80%;--by:68%;--bz:240%"><span>Мокапы</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 ДИЗАЙН УПАКОВКИ -->
+<section id="packaging" class="section packaging" data-num="08" data-title="Дизайн упаковки" data-colors="#c39bff,#ff9ed8,#9be8ff,#3a1a5c">
+  <div id="glow" class="project glow">
+    <div class="water"></div>
+    <div class="bubbles" aria-hidden="true"></div>
+    <div class="pearls" aria-hidden="true"></div>
+    <svg class="shell sh1"><use href="#s-shell"/></svg>
+    <svg class="shell sh2"><use href="#s-shell"/></svg>
+    <svg class="shell sh3"><use href="#s-shell"/></svg>
+    <div class="wrap">
+      <p class="sec-label"><span>08</span> Дизайн упаковки</p>
+      <div class="proj-head">
+        <h2 class="proj-title glow-title holo-text" data-split>Glow Mermaid</h2>
+        <p class="proj-meta">Branding / Packaging / Illustration · фирменный стиль, иллюстрация, упаковка, визитки, реклама</p>
+      </div>
+      <div class="glow-hero">
+        <figure class="gm float-card tilt" data-lb="glow" data-full="assets/glow-mermaid/01-logo.jpg" style="--d:0s"><img src="assets/glow-mermaid/thumbs/01-logo.jpg" alt="Glow Mermaid — логотип" loading="lazy" width="756" height="760"><figcaption>Логотип</figcaption></figure>
+        <figure class="gm gm-big float-card tilt" data-lb="glow" data-full="assets/glow-mermaid/03-mermaid-illustration.jpg" style="--d:-2s"><img src="assets/glow-mermaid/03-mermaid-illustration.jpg" alt="Glow Mermaid — иллюстрация русалки" loading="lazy" width="904" height="1280"><figcaption>Иллюстрация русалки</figcaption></figure>
+        <figure class="gm float-card tilt" data-lb="glow" data-full="assets/glow-mermaid/02-composition.jpg" style="--d:-4s"><img src="assets/glow-mermaid/thumbs/02-composition.jpg" alt="Glow Mermaid — оригинальная композиция проекта" loading="lazy" width="538" height="760"><figcaption>Фирменный стиль · композиция</figcaption></figure>
+      </div>
+      <div class="glow-row">
+        <figure class="gm float-card tilt" data-lb="glow" data-full="assets/glow-mermaid/04-business-cards.jpg" style="--d:-1s"><img src="assets/glow-mermaid/thumbs/04-business-cards.jpg" alt="Glow Mermaid — визитки" loading="lazy" width="760" height="570"><figcaption>Визитки</figcaption></figure>
+        <figure class="gm float-card tilt" data-lb="glow" data-full="assets/glow-mermaid/06-packaging-box.jpg" style="--d:-3s"><img src="assets/glow-mermaid/thumbs/06-packaging-box.jpg" alt="Glow Mermaid — упаковка" loading="lazy" width="537" height="760"><figcaption>Упаковка</figcaption></figure>
+        <figure class="gm float-card tilt" data-lb="glow" data-full="assets/glow-mermaid/05-cosmetics-poster.jpg" style="--d:-5s"><img src="assets/glow-mermaid/thumbs/05-cosmetics-poster.jpg" alt="Glow Mermaid — рекламный постер косметики" loading="lazy" width="537" height="760"><figcaption>Косметика · реклама</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 СОЦИАЛЬНЫЕ И ОБРАЗОВАТЕЛЬНЫЕ -->
+<section id="social" class="section social" data-num="09" data-title="Социальные и образовательные проекты" data-colors="#ff6fb5,#5fc8ff,#5fe08a,#1c1a3a">
+  <div id="council" class="project council">
+    <div class="shapes" aria-hidden="true"><i class="sq"></i><i class="ci"></i><i class="tr"></i><i class="sq s2"></i><i class="ci c2"></i><i class="tr t2"></i></div>
+    <div class="wrap">
+      <p class="sec-label"><span>09</span> Социальные и образовательные проекты</p>
+      <div class="proj-head">
+        <h2 class="proj-title council-title" data-split>Региональный ученический совет Гагаузии</h2>
+        <p class="proj-meta">Логотип · мерч · мокапы кружек и блокнота</p>
+      </div>
+      <div class="council-grid">
+        <figure class="cg-logo tilt" data-lb="council" data-full="assets/student-council/logo.jpg"><img src="assets/student-council/logo.jpg" alt="Логотип Регионального ученического совета Гагаузии" loading="lazy" width="1280" height="1280"></figure>
+        <figure class="cg-m float-card tilt" data-lb="council" data-full="assets/student-council/mugs.jpg" style="--d:-1s"><img src="assets/student-council/thumbs/mugs.jpg" alt="Мокап кружек" loading="lazy" width="760" height="570"><figcaption>Кружки</figcaption></figure>
+        <figure class="cg-m float-card tilt" data-lb="council" data-full="assets/student-council/notebook.jpg" style="--d:-3s"><img src="assets/student-council/thumbs/notebook.jpg" alt="Мокап блокнота" loading="lazy" width="760" height="760"><figcaption>Блокнот</figcaption></figure>
+      </div>
+    </div>
+  </div>
+  <div id="emblem" class="project emblem">
+    <div class="emb-rays"></div>
+    <div class="wrap emb-grid">
+      <div class="emb-stage">
+        <svg class="emb-frame ef1" viewBox="0 0 200 200"><use href="#s-rosette"/></svg>
+        <div class="emb-ring"></div>
+        <img class="emb-img" data-lb="emblem" data-full="assets/school-emblem/emblem.jpg" src="assets/school-emblem/emblem.jpg" alt="Герб Теоретического лицея V. Moșkov" loading="lazy" width="1280" height="1280">
+      </div>
+      <div class="emb-text">
+        <p class="proj-kicker">School emblem</p>
+        <h2 class="proj-title emb-title" data-split>Герб лицея V.&nbsp;Moșkov</h2>
+        <p class="emb-desc">Торжественный геральдический знак Liceul Teoretic «V. Moșkov». Оригинальный герб показан без изменений — анимируется только окружение.</p>
+        <button class="btn btn-gold magnetic" type="button" data-open-lb="emblem" data-index="0">Открыть герб</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 ЖУРНАЛЫ + БИБЛИОТЕКА -->
+<section id="magazines" class="section library" data-num="10" data-title="Журналы" data-colors="#8755F5,#FFB69E,#F458AE,#1a0f2e">
+  <div class="deco" data-stars="9" data-spheres="2" data-rings="1"></div>
+  <div class="wrap">
+    <p class="sec-label"><span>10</span> Издательский дизайн · библиотека</p>
+    <h2 class="sec-title kinetic" data-split>Истории, которые можно перелистнуть</h2>
+    <p class="sec-lead">Волшебная библиотека моих журналов, книг и фотокаталогов. Наведите на книгу — она приоткроется. Нажмите — откроется внутри сайта.</p>
+  </div>
+  <div class="shelf">
+    <div class="shelf-books">
+      <button class="book3d" type="button" data-book="guguscuk24" style="--w:200px;--h:282px;--spine:#c2410c" aria-label="Открыть журнал Guguşçuk №24">
+        <span class="b-back"></span><span class="b-pages"></span><span class="b-spine"><i>GUGUŞÇUK · 24</i></span>
+        <span class="b-cover"><img src="assets/magazines/guguscuk-24/pages/thumbs/01.jpg" data-hq="assets/magazines/guguscuk-24/pages/01.jpg" alt="" width="171" height="240"></span>
+        <span class="b-label">Guguşçuk №24 · 2026<small>журнал · 24 стр.</small></span>
+      </button>
+      <button class="book3d" type="button" data-book="guguscuk22" style="--w:200px;--h:282px;--spine:#3f8f3a" aria-label="Обложка журнала Guguşçuk №22">
+        <span class="b-back"></span><span class="b-pages"></span><span class="b-spine"><i>GUGUŞÇUK · 22</i></span>
+        <span class="b-cover"><img src="assets/magazines/guguscuk-22/thumbs/cover.jpg" alt="" width="540" height="760"></span>
+        <span class="b-label">Guguşçuk №22<small>только обложка</small></span>
+      </button>
+      <button class="book3d" type="button" data-book="tepegoz" style="--w:178px;--h:250px;--spine:#7a3fa0" aria-label="Открыть книгу Tepägöz">
+        <span class="b-back"></span><span class="b-pages"></span><span class="b-spine"><i>TEPÄGÖZ</i></span>
+        <span class="b-cover"><img src="assets/books/tepegoz/pages/thumbs/01.jpg" alt="" width="171" height="240"></span>
+        <span class="b-label">Tepägöz<small>сказка · 21 стр.</small></span>
+      </button>
+      <button class="book3d" type="button" data-book="gagauzluk" style="--w:240px;--h:240px;--spine:#b3202a" aria-label="Открыть фотокаталог Gagauzluk">
+        <span class="b-back"></span><span class="b-pages"></span><span class="b-spine"><i>GAGAUZLUK · 2026</i></span>
+        <span class="b-cover"><img src="assets/catalogs/gagauzluk/pages/thumbs/01.jpg" alt="" width="240" height="240"></span>
+        <span class="b-label">Gagauzluk<small>фотокаталог · 39 стр.</small></span>
+      </button>
+    </div>
+    <div class="shelf-board"></div>
+  </div>
+
+  <!-- Guguşçuk -->
+  <div id="guguscuk" class="project gug">
+    <div class="gug22">
+      <div class="spring-deco" aria-hidden="true"></div>
+      <div class="wrap gug22-grid">
+        <figure class="gug-cover tilt" data-lb="g22" data-full="assets/magazines/guguscuk-22/cover.jpg"><img src="assets/magazines/guguscuk-22/thumbs/cover.jpg" alt="Обложка журнала Guguşçuk №22" loading="lazy" width="540" height="760"><span class="shine"></span></figure>
+        <div>
+          <p class="proj-kicker">Детский журнал · весенний выпуск</p>
+          <h2 class="proj-title gug-title" data-split>Guguşçuk №22</h2>
+          <p class="proj-meta">Оригинальная обложка выпуска. Полного PDF этого номера в материалах нет, поэтому показывается только обложка.</p>
+          <button class="btn btn-spring magnetic" type="button" data-open-lb="g22" data-index="0">Рассмотреть обложку</button>
+        </div>
+      </div>
+    </div>
+    <div class="gug24">
+      <div class="leaves" aria-hidden="true"></div>
+      <div class="wrap gug24-grid">
+        <div>
+          <p class="proj-kicker">Детский журнал · осенний выпуск · 2026</p>
+          <h2 class="proj-title gug-title autumn" data-split>Guguşçuk №24</h2>
+          <p class="proj-meta">24 страницы. Дизайн и иллюстрации — Кристина Кирица (указано на 2-й странице издания).</p>
+          <div class="btn-row">
+            <button class="btn btn-autumn magnetic" type="button" data-open-book="guguscuk24">Открыть журнал</button>
+            <a class="btn btn-ghost-dark magnetic" href="assets/pdf/guguscuk-24-2026.pdf" download>Скачать PDF</a>
+          </div>
+        </div>
+        <figure class="gug-cover paper-cut tilt" data-open-book="guguscuk24"><img src="assets/magazines/guguscuk-24/pages/thumbs/01.jpg" data-src-hq="assets/magazines/guguscuk-24/pages/01.jpg" alt="Обложка журнала Guguşçuk №24" loading="lazy" width="171" height="240"><span class="shine"></span></figure>
+      </div>
+      <div class="wrap spreads" data-book-spreads="guguscuk24" data-pairs="8-9,10-11,14-15,20-21"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 КНИГИ -->
+<section id="books" class="section tepegoz" data-num="11" data-title="Книги и иллюстрации" data-colors="#7a3fa0,#ff9a5a,#ff6fae,#2a1240">
+  <div class="sky">
+    <div class="sun"></div>
+    <svg class="cloud c1"><use href="#s-cloud"/></svg><svg class="cloud c2"><use href="#s-cloud"/></svg><svg class="cloud c3"><use href="#s-cloud"/></svg>
+    <div class="sky-stars"></div>
+    <svg class="hills h1" viewBox="0 0 1440 300" preserveAspectRatio="none"><path d="M0 200C200 120 380 160 560 120S900 60 1100 140 1360 120 1440 100V300H0z"/></svg>
+    <svg class="hills h2" viewBox="0 0 1440 300" preserveAspectRatio="none"><path d="M0 240C160 180 340 230 520 190S860 150 1040 210 1320 180 1440 200V300H0z"/></svg>
+  </div>
+  <div class="wrap tep-grid">
+    <div class="tep-book-wrap">
+      <button class="book3d big" type="button" data-book="tepegoz" style="--w:300px;--h:422px;--spine:#5b2a86" aria-label="Читать сказку Tepägöz">
+        <span class="b-back"></span><span class="b-pages"></span><span class="b-spine"><i>TEPÄGÖZ</i></span>
+        <span class="b-cover"><img src="assets/books/tepegoz/pages/01.jpg" alt="Обложка книги Tepägöz" width="925" height="1300"></span>
+      </button>
+    </div>
+    <div class="tep-text">
+      <p class="sec-label"><span>11</span> Книги и иллюстрации</p>
+      <h2 class="proj-title tep-title" data-split>Tepägöz</h2>
+      <p class="proj-meta">Gagauz mifli masalı · гагаузская мифологическая сказка · иллюстрированное издание, 21 страница</p>
+      <p class="tep-desc">Полноценная иллюстрированная книга: три брата сбиваются с пути и встречают великана Tepägöz. Страницы показаны в исходном порядке, без обрезки иллюстраций и без изменения текста.</p>
+      <div class="btn-row">
+        <button class="btn btn-sunset magnetic" type="button" data-open-book="tepegoz">Читать сказку</button>
+        <a class="btn btn-ghost magnetic" href="assets/pdf/tepegoz.pdf" download>Скачать PDF</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap spreads" data-book-spreads="tepegoz" data-pairs="2-3,8-9,14-15"></div>
+</section>
+
+<!-- 12 ФОТОКАТАЛОГИ -->
+<section id="catalogs" class="section gagauzluk" data-num="12" data-title="Фотокаталоги" data-colors="#f6ecd8,#9fc9e8,#d23a3a,#24304a">
+  <div class="orn-band top"><svg preserveAspectRatio="none" viewBox="0 0 120 40"><use href="#s-ornament"/></svg></div>
+  <div class="wrap">
+    <p class="sec-label dark"><span>12</span> Фотокаталоги</p>
+    <div class="proj-head">
+      <h2 class="proj-title gag-title" data-split>«GAGAUZLUK»</h2>
+      <p class="gag-full">Uşakların gözünnän «GAGAUZLUK» prin ochii copiilor</p>
+      <p class="proj-meta dark">Фотокаталог · 2026 · 39 страниц. Роль Кристины — дизайнер (указано на 4-й странице издания). Авторство фотографий и текстов сохранено в оригинале.</p>
+    </div>
+    <div class="gag-grid">
+      <figure class="gag-cover tilt" data-open-book="gagauzluk"><img src="assets/catalogs/gagauzluk/pages/01.jpg" alt="Обложка фотокаталога Gagauzluk" loading="lazy" width="1301" height="1300"><span class="shine"></span><figcaption>Обложка</figcaption></figure>
+      <figure class="gag-poster tilt" data-lb="gag" data-full="assets/catalogs/gagauzluk/poster.jpg"><img src="assets/catalogs/gagauzluk/thumbs/poster.jpg" alt="Постер проекта Gagauzluk" loading="lazy" width="427" height="760"><figcaption>Оригинальный постер</figcaption></figure>
+      <div class="gag-cta">
+        <p>Культурный проект о гагаузском языке и традициях глазами детей — фотографии, тексты и орнаменты, собранные в единое издание.</p>
+        <div class="btn-row">
+          <button class="btn btn-folk magnetic" type="button" data-open-book="gagauzluk">Открыть фотокаталог</button>
+          <a class="btn btn-ghost-dark magnetic" href="assets/pdf/gagauzluk-fotokatalog-2026.pdf" download>Скачать PDF</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="filmstrip" aria-hidden="true"><div class="fs-track"></div></div>
+  <div class="wrap spreads" data-book-spreads="gagauzluk" data-pairs="14-15,22-23,30-31"></div>
+  <div class="orn-band bottom"><svg preserveAspectRatio="none" viewBox="0 0 120 40"><use href="#s-ornament"/></svg></div>
+</section>
+
+<!-- 13 UI/UX — ROMINA -->
+<section id="uiux" class="section romina" data-num="13" data-title="UI/UX и мобильные приложения" data-colors="#8f1d1d,#e0b04a,#f6e7cf,#2a0d0d">
+  <div class="orn-band top gold"><svg preserveAspectRatio="none" viewBox="0 0 120 40"><use href="#s-ornament"/></svg></div>
+  <div class="deco" data-stars="5" data-spheres="1" data-rings="1"></div>
+  <div class="wrap">
+    <p class="sec-label"><span>13</span> UI/UX и мобильные приложения</p>
+    <div class="proj-head">
+      <h2 class="proj-title rom-title" data-split>Romina</h2>
+      <p class="rom-sub">Romina — румынский язык для жизни в Молдове</p>
+      <p class="proj-meta">Mobile app / Branding / Character design · концепт и дизайн мобильного приложения (MVP-прототип). Экраны — дизайн-макеты интерфейса.</p>
+    </div>
+  </div>
+  <div class="wrap rom-ui">
+    <div class="phones tilt-scene">
+      <div class="phone p-left"><div class="phone-screen"><img alt="" src="assets/romina/screen-lessons.jpg" width="921" height="2048"></div></div>
+      <div class="phone p-center"><div class="phone-notch"></div><div class="phone-screen"><img alt="Экран приложения Romina" src="assets/romina/screen-splash.jpg" width="1080" height="1920"></div></div>
+      <div class="phone p-right"><div class="phone-screen"><img alt="" src="assets/romina/screen-ai.jpg" width="921" height="2048"></div></div>
+    </div>
+    <div class="rom-controls">
+      <h3>Интерфейс</h3>
+      <p class="rom-screen-name">Заставка</p>
+      <div class="screen-btns"></div>
+      <p class="note">Демонстрационные экраны дизайна — не работающий онлайн-сервис.</p>
+    </div>
+  </div>
+  <div class="wrap rom-identity">
+    <h3 class="rom-h3">Визуальная айдентика</h3>
+    <div class="rom-id-grid">
+      <figure class="tilt" data-lb="rom" data-full="assets/romina/logo-emblem.jpg"><img src="assets/romina/thumbs/logo-emblem.jpg" alt="Romina — логотип-эмблема" loading="lazy" width="760" height="760"><figcaption>Логотип-эмблема</figcaption></figure>
+      <figure class="tilt" data-lb="rom" data-full="assets/romina/logo-character.jpg"><img src="assets/romina/thumbs/logo-character.jpg" alt="Romina — знак с персонажем" loading="lazy" width="760" height="760"><figcaption>Знак с персонажем</figcaption></figure>
+      <figure class="tilt" data-lb="rom" data-full="assets/character-design/romina-national-costume.jpg"><img src="assets/character-design/thumbs/romina-national-costume.jpg" alt="Romina — персонаж" loading="lazy" width="507" height="760"><figcaption>Персонаж</figcaption></figure>
+      <figure class="tilt tall" data-lb="rom" data-full="assets/romina/poster.jpg"><img src="assets/romina/thumbs/poster.jpg" alt="Romina — рекламный постер" loading="lazy" width="428" height="760"><figcaption>Рекламный постер (макет)</figcaption></figure>
+      <figure class="tilt wide" data-lb="rom" data-full="assets/romina/promo-red.jpg"><img src="assets/romina/thumbs/promo-red.jpg" alt="Romina — промо-мокап" loading="lazy" width="760" height="532"><figcaption>Промо-мокап</figcaption></figure>
+      <figure class="tilt wide" data-lb="rom" data-full="assets/romina/mockup-hand.jpg"><img src="assets/romina/thumbs/mockup-hand.jpg" alt="Romina — мокап в руке" loading="lazy" width="760" height="509"><figcaption>Рекламный мокап</figcaption></figure>
+      <figure class="tilt wide" data-lb="rom" data-full="assets/romina/mockup-desk.jpg"><img src="assets/romina/thumbs/mockup-desk.jpg" alt="Romina — мокап на столе" loading="lazy" width="760" height="517"><figcaption>Рекламный мокап</figcaption></figure>
+    </div>
+    <p class="note center">Значки магазинов приложений на постере — элемент рекламного макета; публикация приложения в магазинах не заявляется.</p>
+  </div>
+</section>
+
+<!-- 14 ВЕБ-ДИЗАЙН -->
+<section id="web" class="section web" data-num="14" data-title="Веб-дизайн" data-colors="#83D9FF,#8755F5,#F458AE,#141030">
+  <div class="deco" data-stars="6" data-spheres="2" data-rings="2"></div>
+  <div class="wrap web-grid">
+    <div>
+      <p class="sec-label"><span>14</span> Веб-дизайн</p>
+      <h2 class="sec-title kinetic" data-split>Этот сайт — тоже работа</h2>
+      <p class="sec-lead">Отдельных веб-проектов в материалах нет, поэтому в качестве демонстрации веб-дизайна выступает само интерактивное портфолио «Моя творческая вселенная».</p>
+      <ul class="web-list">
+        <li><b>Концепция</b> — каждый раздел как отдельный художественный мир со своей палитрой</li>
+        <li><b>Интерактив</b> — 3D-карусель, перелистывание книг, режим презентации</li>
+        <li><b>Технологии</b> — HTML, CSS 3D, JavaScript, SVG, Canvas; работает без интернета</li>
+        <li><b>Доступность</b> — управление с клавиатуры, режим без интенсивных эффектов</li>
+      </ul>
+    </div>
+    <div class="browser tilt">
+      <div class="browser-bar"><i></i><i></i><i></i><span>kristina-portfolio / index.html</span></div>
+      <div class="browser-view">
+        <div class="bv-scroll">
+          <img src="assets/web/screen-home.jpg" alt="Скриншот главного экрана портфолио" loading="lazy" width="1440" height="900">
+          <img src="assets/web/screen-digital.jpg" alt="Скриншот раздела цифрового искусства" loading="lazy" width="1440" height="900">
+          <img src="assets/web/screen-library.jpg" alt="Скриншот библиотеки изданий" loading="lazy" width="1440" height="900">
+          <img src="assets/web/screen-romina.jpg" alt="Скриншот раздела Romina" loading="lazy" width="1440" height="900">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 ЗАВЕРШЕНИЕ -->
+<section id="finale" class="section finale" data-num="15" data-title="Завершение" data-colors="#F458AE,#8755F5,#83D9FF,#241439">
+  <div class="deco" data-stars="14" data-spheres="3" data-rings="2"></div>
+  <div class="fin-orbit" aria-hidden="true"></div>
+  <div class="fin-text">
+    <h2 class="fin-title holo-text" data-split>СПАСИБО ЗА ВНИМАНИЕ!</h2>
+    <p class="fin-sub">«Искусство начинается с идеи, а дизайн превращает её в реальность».</p>
+    <p class="fin-name">Кристина Кирица · Портфолио 2026</p>
+    <div class="hero-btns">
+      <a href="#home" data-go="home" class="btn btn-holo magnetic">В начало</a>
+      <button type="button" class="btn btn-glass magnetic" data-present>▶ Режим презентации</button>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">© 2026 Кристина Кирица · «Моя творческая вселенная». Все работы принадлежат автору; авторство материалов изданий сохранено.</footer>
+
+<!-- ===== Лайтбокс ===== -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Просмотр изображения">
+  <div class="lb-bg"></div>
+  <div class="lb-stage"><img class="lb-img" alt=""></div>
+  <div class="lb-top"><span class="lb-count"></span><span class="lb-cap"></span>
+    <div class="lb-tools">
+      <button type="button" data-z="-1" title="Уменьшить">−</button>
+      <button type="button" data-z="0" title="Сбросить масштаб">1:1</button>
+      <button type="button" data-z="1" title="Увеличить">+</button>
+      <button type="button" class="lb-close" title="Закрыть (Esc)">✕</button>
+    </div>
+  </div>
+  <button class="lb-nav prev" type="button" aria-label="Предыдущее">‹</button>
+  <button class="lb-nav next" type="button" aria-label="Следующее">›</button>
+  <p class="lb-hint">Колёсико или двойной клик — увеличение · перетаскивание — перемещение · ← → — листать</p>
+</div>
+
+<!-- ===== Читалка (Page Flip) ===== -->
+<div class="reader" id="reader" aria-hidden="true" role="dialog" aria-label="Чтение издания">
+  <div class="rd-bg"></div>
+  <div class="rd-top">
+    <div class="rd-title"></div>
+    <div class="rd-page"><span class="rd-cur"></span> из <span class="rd-total"></span></div>
+    <form class="rd-goto"><label>Стр. <input type="number" min="1" value="1" inputmode="numeric"></label><button type="submit">Перейти</button></form>
+    <div class="rd-tools">
+      <button type="button" class="rd-thumbs-btn" title="Миниатюры">▦ Миниатюры</button>
+      <button type="button" class="rd-zoom" title="Увеличить страницу">⌕ Увеличить</button>
+      <button type="button" class="rd-full" title="Полноэкранный режим">⛶ Экран</button>
+      <a class="rd-dl" href="#" download title="Скачать PDF">⇩ Скачать PDF</a>
+      <button type="button" class="rd-close" title="Закрыть (Esc)">✕ В библиотеку</button>
+    </div>
+  </div>
+  <div class="rd-book"></div>
+  <button class="rd-nav prev" type="button" aria-label="Предыдущая страница">‹</button>
+  <button class="rd-nav next" type="button" aria-label="Следующая страница">›</button>
+  <div class="rd-thumbs"><div class="rd-thumbs-track"></div></div>
+  <p class="rd-hint">Тяните за угол страницы, кликайте по странице или используйте ← →</p>
+</div>
+
+<!-- ===== Режим презентации ===== -->
+<div class="present" id="present" aria-hidden="true" role="dialog" aria-label="Режим презентации">
+  <div class="pr-bg"></div>
+  <div class="pr-scenes">
+
+    <section class="scene sc-intro" data-t="Вступление">
+      <div class="sc-rings"><span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span></div>
+      <div class="sc-collage">
+        <img src="assets/digital-art/thumbs/06-violet-hair.jpg" alt="" class="c1" width="569" height="760"><img src="assets/digital-art/thumbs/01-blonde-portrait.jpg" alt="" class="c2" width="596" height="760"><img src="assets/character-design/thumbs/romina-national-costume.jpg" alt="" class="c3" width="507" height="760"><img src="assets/digital-art/thumbs/07-pink-bob.jpg" alt="" class="c4" width="569" height="760">
+      </div>
+      <div class="sc-center">
+        <p class="kicker">Портфолио · 2026</p>
+        <h2 class="sc-big">КРИСТИНА КИРИЦА</h2>
+        <p class="holo-text sc-mid">МОЯ ТВОРЧЕСКАЯ ВСЕЛЕННАЯ</p>
+        <p class="sc-small">Художник · Дизайнер · Иллюстратор</p>
+        <p class="sc-quote">«Разные миры. Один творческий взгляд».</p>
+      </div>
+    </section>
+
+    <section class="scene sc-art" data-t="Цифровое искусство">
+      <div class="sc-head"><p class="kicker">01 · Цифровое искусство</p><h2>Мир моих иллюстраций</h2></div>
+      <div class="sc-fan"></div>
+      <button class="btn btn-holo" type="button" data-open-lb="digital-all" data-index="0">Открыть галерею рисунков</button>
+    </section>
+
+    <section class="scene sc-char" data-t="Дизайн персонажей">
+      <div class="sc-split">
+        <div class="sc-char-img"><svg class="rosette"><use href="#s-rosette"/></svg><img src="assets/character-design/romina-cutout.png" alt="Romina" data-open-lb="char" data-index="0" width="832" height="1248"></div>
+        <div>
+          <p class="kicker">02 · Дизайн персонажей</p><h2>Romina</h2>
+          <p class="sc-text">Персонаж в национальном костюме: образ, орнаменты, палитра и характер.</p>
+          <div class="sc-details"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene sc-brand" data-t="Графический дизайн и брендинг">
+      <div class="sc-head"><p class="kicker">03 · Графический дизайн и брендинг</p><h2>Три мира — три айдентики</h2></div>
+      <div class="sc-cards3">
+        <button class="sc-card zin" type="button" data-open-lb="zin-all" data-index="0"><img src="assets/zinfoto/thumbs/05-logo-dark.jpg" alt="" width="760" height="492"><b>ZinFoto</b><span>монохромная айдентика фотографа</span></button>
+        <button class="sc-card bkc" type="button" data-open-lb="bk" data-index="0"><img src="assets/bk-wearshop/thumbs/composition.jpg" alt="" width="523" height="760"><b>BK Wearshop</b><span>айдентика магазина одежды</span></button>
+        <button class="sc-card gmc" type="button" data-open-lb="glow" data-index="0"><img src="assets/glow-mermaid/thumbs/03-mermaid-illustration.jpg" alt="" width="537" height="760"><b>Glow Mermaid</b><span>брендинг · упаковка · иллюстрация</span></button>
+      </div>
+    </section>
+
+    <section class="scene sc-social" data-t="Социальные проекты">
+      <div class="sc-head"><p class="kicker">04 · Социальные и образовательные проекты</p><h2>Для сообщества</h2></div>
+      <div class="sc-two">
+        <button class="sc-card light" type="button" data-open-lb="council" data-index="0"><img src="assets/student-council/thumbs/logo.jpg" alt="" width="760" height="760"><b>Региональный ученический совет Гагаузии</b><span>логотип · кружки · блокнот</span></button>
+        <button class="sc-card royal" type="button" data-open-lb="emblem" data-index="0"><img src="assets/school-emblem/thumbs/emblem.jpg" alt="" width="760" height="760"><b>Герб лицея V. Moșkov</b><span>геральдический знак</span></button>
+      </div>
+    </section>
+
+    <section class="scene sc-pub" data-t="Журналы, книги, фотокаталоги">
+      <div class="sc-head"><p class="kicker">05 · Журналы, книги и фотокаталоги</p><h2>Истории, которые можно перелистнуть</h2></div>
+      <div class="sc-books">
+        <button class="sc-book" type="button" data-open-book="guguscuk24"><img src="assets/magazines/guguscuk-24/pages/thumbs/01.jpg" alt="" width="171" height="240"><b>Открыть журнал</b><span>Guguşçuk №24</span></button>
+        <button class="sc-book" type="button" data-open-book="tepegoz"><img src="assets/books/tepegoz/pages/thumbs/01.jpg" alt="" width="171" height="240"><b>Читать сказку</b><span>Tepägöz</span></button>
+        <button class="sc-book sq" type="button" data-open-book="gagauzluk"><img src="assets/catalogs/gagauzluk/pages/thumbs/01.jpg" alt="" width="240" height="240"><b>Открыть фотокаталог</b><span>Gagauzluk</span></button>
+        <button class="sc-book" type="button" data-open-lb="g22" data-index="0"><img src="assets/magazines/guguscuk-22/thumbs/cover.jpg" alt="" width="540" height="760"><b>Обложка</b><span>Guguşçuk №22</span></button>
+      </div>
+    </section>
+
+    <section class="scene sc-app" data-t="Romina и цифровой дизайн">
+      <div class="sc-split">
+        <div class="sc-phones">
+          <div class="phone mini m1"><div class="phone-screen"><img src="assets/romina/screen-lessons.jpg" alt="" width="921" height="2048"></div></div>
+          <div class="phone mini m2"><div class="phone-screen"><img src="assets/romina/screen-splash.jpg" alt="" width="1080" height="1920"></div></div>
+          <div class="phone mini m3"><div class="phone-screen"><img src="assets/romina/screen-daily.jpg" alt="" width="688" height="1529"></div></div>
+        </div>
+        <div>
+          <p class="kicker">06 · Romina и цифровой дизайн</p><h2>Romina</h2>
+          <p class="sc-text">Румынский язык для жизни в Молдове: айдентика, персонаж и интерфейс мобильного приложения (MVP-прототип).</p>
+          <button class="btn btn-gold" type="button" data-open-lb="rom-screens" data-index="0">Смотреть экраны</button>
+          <div class="hidden-set" data-set="rom-screens"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene sc-final" data-t="Завершение">
+      <div class="fin-orbit sc-orbit"></div>
+      <div class="sc-center">
+        <h2 class="sc-big holo-text">СПАСИБО ЗА ВНИМАНИЕ!</h2>
+        <p class="sc-quote">«Искусство начинается с идеи, а дизайн превращает её в реальность».</p>
+        <p class="sc-small">Кристина Кирица · 2026</p>
+      </div>
+    </section>
+  </div>
+  <div class="pr-ui">
+    <button class="pr-btn prev" type="button" aria-label="Предыдущая сцена">←</button>
+    <div class="pr-dots"></div>
+    <span class="pr-count"></span>
+    <button class="pr-btn next" type="button" aria-label="Следующая сцена">→</button>
+    <button class="pr-btn close" type="button" title="Выйти (Esc)">✕ Выйти</button>
+  </div>
+  <p class="pr-hint">← → или пробел — сцены · Esc — выход</p>
+</div>
+
+<script src="libraries/kflipbook.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
